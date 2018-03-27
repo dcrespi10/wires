@@ -1,0 +1,17 @@
+﻿<div class="col-md-6 col-md-offset-3">
+    <h1>Hi {{currentUser.firstName}}!</h1>
+    {{ currentUser._id }}
+    <h3>What do you want to do?</h3>
+    <ul>
+        <li>
+            <a [routerLink]="['/centre', currentUser._id]">Centre's data</a>
+        </li>
+        <li>
+            <a [routerLink]="['/account', currentUser._id]">Personal data</a>
+        </li>
+        <li>
+            <a [routerLink]="['/admissions', currentUser._id]">Admissions</a>
+        </li>
+    </ul>
+    <p><a [routerLink]="['/login']">Logout</a></p>
+</div>

@@ -1,0 +1,42 @@
+<p *ngIf="form != undefined">
+  centre works!  
+  {{ form.label }}
+  <span *ngFor="let page of form.pages">
+      <h1>{{ page.label }}</h1>      
+      <h3 *ngIf="uncompletedPages.indexOf(page.page) == -1 ">Section is completed</h3>
+      <h3 *ngIf="uncompletedPages.indexOf(page.page) > -1 ">Section is NOT completed</h3>
+      <span *ngFor="let variable of page.variables">
+        <span *ngIf="variable.type=='string' && visibilityCheck(variable.name, variable.visible)">
+          {{ variable.label }}<input type="text" [(ngModel)]="model[variable.name]" />
+        </span>
+        <span *ngIf="variable.type=='single' && visibilityCheck(variable.name, variable.visible)">
+            {{ variable.label }}
+            <tr *ngFor="let value of variable.values">
+                <td>
+                  <input type="radio" [name]="variable.name" 
+                      [(ngModel)]="model[variable.name]"
+                      [value]="value.name" >
+                      
+                </td>
+                <td>{{ value.label }}</td> 
+            </tr>
+        </span>
+        <span *ngIf="variable.type=='multi' && visibilityCheck(variable.name, variable.visible)">
+            {{ variable.label }}
+            <tr *ngFor="let value of variable.values">
+                <td>
+                  <input type="checkbox" [name]="value.name" 
+                  (click)="setChecklistValue(variable.name, value.name)"    
+                  [checked]="model[variable.name] && model[variable.name].indexOf(value.name) > -1"
+                  [value]="value.name">
+                </td>
+                <td>{{ value.label }}</td> 
+            </tr>
+        </span>
+        <br/>
+      </span>    
+  </span>
+  <button type="button" (click)="save()">Save</button>
+  <a [routerLink]="['/home']">Back to home</a>
+  <a [routerLink]="['/login']">Logout</a>
+</p>
