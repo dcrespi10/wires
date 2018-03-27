@@ -1,0 +1,70 @@
+<div class="sidebar-wrapper">
+    <div class="logo">
+        <a href="https://github.com/dreinkaos" class="simple-text">
+            <div class="logo-img">
+                <img src="/assets/img/angular2-logo-white.png"/>
+            </div>
+            Wires Portal
+        </a>
+    </div>
+    <ul class="nav responsive-nav">
+        <li class="separator hidden-lg hidden-md"></li>
+        <li>
+            <a [routerLink]="['/home']">
+              <i class="pe-7s-home"></i>
+              <p>Back to home</p>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="['/centre', currentUser._id]">
+              <i class="pe-7s-culture"></i>
+              <p>Centre data</p>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="['/account', currentUser._id]">
+              <i class="pe-7s-config"></i>
+              <p>Account settings</p>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="['/admissions', currentUser._id]">
+              <i class="pe-7s-id"></i>
+              <p>Adimissions list</p>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="['/disclaimer']">
+              <i class="pe-7s-info"></i>
+              <p>Disclaimer</p>
+            </a>
+        </li>    
+        <li>
+            <a [routerLink]="['/login']">
+              <i class="pe-7s-airplay"></i>
+              <p>Logout</p>
+            </a>
+        </li>                    
+    </ul>
+</div>
+
+
+<!--
+<ul>
+  <li>
+      <a [routerLink]="['/home']">Back to home</a>
+  </li>
+  <li>
+      <a [routerLink]="['/centre', currentUser._id]">Centre's data</a>
+  </li>
+  <li>
+      <a [routerLink]="['/account', currentUser._id]">Personal data</a>
+  </li>
+  <li>
+      <a [routerLink]="['/admissions', currentUser._id]">Admissions</a>
+  </li>
+  <li>
+      <a [routerLink]="['/login']">Logout</a>
+  </li>
+</ul>
+-->

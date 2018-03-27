@@ -14,6 +14,7 @@ import { RegisterComponent } from './register/index';
 import { AccountComponent } from './account/account.component';
 import { AdmissionsComponent } from './admissions/admissions.component';
 import { CentreComponent } from './centre/centre.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
     imports: [
@@ -30,7 +31,8 @@ import { CentreComponent } from './centre/centre.component';
         RegisterComponent,
         AccountComponent,
         AdmissionsComponent,
-        CentreComponent
+        CentreComponent,
+        SidebarComponent
     ],
     providers: [
         AuthGuard,
