@@ -3,11 +3,26 @@
         <sidebar></sidebar>
         <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
     </div>
-
-    <div class="main-panel">
-        <div class="col-md-6 col-md-offset-3">
-        Admissions works
-        </div>
+    
+    <div class="main-panel col-md-6 col-md-offset-3" *ngIf="form != undefined">
+        <span *ngIf="!admissionId">
+            {{ admissionList | json }}
+            <table>
+                <tr>
+                    <th>Identifier</th><th>Age</th>
+                </tr>
+                <tr *ngFor="let admission of admissionList">
+                    <td>{{ admission.customId }}</td>
+                    <td>{{ admission.age}}</td>
+                    <td><button type="button" (click)="admissionId = admission._id">Open</button></td>
+                </tr>
+            </table>
+        </span>
+        
+        <span *ngIf="admissionId">
+            <single-admission [(admissionid)]="admissionId" [(userid)]="id" [(form)]="form"></single-admission>
+            <button type="button" (click)="save()">Save</button>
+        </span>
+        
     </div>
 </div>
-    

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AlertService, AuthenticationService, CrfService, DataService } from '../_services/index';
+import { Crf } from '../_models/index';
 
 @Component({
   selector: 'app-admissions',
@@ -7,9 +10,49 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdmissionsComponent implements OnInit {
 
-  constructor() { }
+  id:string;
+  model:any={};
+  form: Crf;
+  admissionList: any=[];
+  admissionId: string;
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private crfService: CrfService,
+    private dataService: DataService,
+    private alertService: AlertService) { 
+      this.dataService.setCollectionName("admissionsdata");      
+    }
 
-  ngOnInit() {
-  }
+
+    ngOnInit() {
+      this.route.params.subscribe(
+        (params : any) => {
+           this.id = params["id"]; 
+           this.getcrf();
+           this.dataService.getCollection(this.id).subscribe(
+            data => {
+              this.admissionList = data;
+            }, 
+            error =>{
+              console.log("uff");
+            });   
+        }
+     );
+     
+    }
+
+    getcrf() {
+      this.crfService.getCrf("admissionsdata")
+          .subscribe(
+              data => {
+                  this.form = data;
+                  //this.setUnCompletedSection();                
+              },
+              error => {
+                  
+          });
+    }       
 
 }

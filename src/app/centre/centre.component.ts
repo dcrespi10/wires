@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AlertService, AuthenticationService, CrfService, CentresDataService } from '../_services/index';
+import { AlertService, AuthenticationService, CrfService, DataService } from '../_services/index';
 import { Crf } from '../_models/index';
 @Component({
   selector: 'app-centre',
@@ -20,8 +20,10 @@ export class CentreComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private crfService: CrfService,
-    private centresDataService: CentresDataService,
-    private alertService: AlertService) { }
+    private centresDataService: DataService,
+    private alertService: AlertService) {
+      this.centresDataService.setCollectionName("centresdata");
+     }
 
   ngOnInit() {
     this.route.params.subscribe(

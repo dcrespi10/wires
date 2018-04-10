@@ -1,0 +1,65 @@
+<table *ngIf="form">
+  <p *ngFor="let page of form.pages">
+      <tr class="variables">
+          <td><h1>{{ page.label }}</h1></td>      
+          <td>
+              <h4 *ngIf="uncompletedPages.indexOf(page.page) == -1 ">Section is completed</h4>
+              <h4 *ngIf="uncompletedPages.indexOf(page.page) > -1 ">Section is NOT completed</h4>
+          </td>
+      </tr>
+      
+      <tr *ngFor="let variable of page.variables" class="variables">
+          <span *ngIf="variable.type=='string' && visibilityCheck(variable.name, variable.visible)">
+              <td>
+                  {{ variable.label }}                            
+              </td>
+              <td>
+                  <input type="text" [(ngModel)]="model[variable.name]" />
+              </td>
+          </span>
+          <span *ngIf="variable.type=='integer' && visibilityCheck(variable.name, variable.visible)">
+              <td>
+                  {{ variable.label }}                            
+              </td>
+              <td>
+                  <input type="number" min="0" step="1" [(ngModel)]="model[variable.name]" />
+              </td>
+          </span>
+          <span *ngIf="variable.type=='single' && visibilityCheck(variable.name, variable.visible)">
+              <td>
+                  {{ variable.label }}
+              </td>
+              <td>
+                  <table class="valuestable">
+                      <tr *ngFor="let value of variable.values" class="a">
+                          <td>
+                          <input type="radio" [name]="variable.name" 
+                              [(ngModel)]="model[variable.name]"
+                              [value]="value.name" >
+                              
+                          </td>
+                          <td>{{ value.label }}</td> 
+                      </tr>
+                  </table>
+              </td>
+          </span>
+          <span *ngIf="variable.type=='multi' && visibilityCheck(variable.name, variable.visible)">
+              <td>{{ variable.label }}</td>
+              <td>
+                  <table class="valuestable">
+                      <tr *ngFor="let value of variable.values">
+                          <td>
+                          <input type="checkbox" [name]="value.name" 
+                          (click)="setChecklistValue(variable.name, value.name)"    
+                          [checked]="model[variable.name] && model[variable.name].indexOf(value.name) > -1"
+                          [value]="value.name">
+                          </td>
+                          <td>{{ value.label }}</td> 
+                      </tr>
+                  </table>                            
+              </td>
+          </span>                    
+          <br/>
+      </tr>  
+  </p>
+</table>
