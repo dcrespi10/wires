@@ -14,6 +14,7 @@ export class SingleAdmissionComponent implements OnInit {
   model: any = {};
   uncompletedPages:any=[];
   visibilities={};
+  id:any;
   
   constructor(private dataService: DataService) {
     this.dataService.setCollectionName("admissionsdata");

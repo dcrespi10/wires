@@ -2,27 +2,84 @@
     <div class="sidebar" data-color="red" data-image="">
         <sidebar></sidebar>
         <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
-    </div>
-    
-    <div class="main-panel col-md-6 col-md-offset-3" *ngIf="form != undefined">
-        <span *ngIf="!admissionId">
-            {{ admissionList | json }}
-            <table>
-                <tr>
-                    <th>Identifier</th><th>Age</th>
-                </tr>
-                <tr *ngFor="let admission of admissionList">
-                    <td>{{ admission.customId }}</td>
-                    <td>{{ admission.age}}</td>
-                    <td><button type="button" (click)="admissionId = admission._id">Open</button></td>
-                </tr>
-            </table>
-        </span>
+    </div>      
+    <div class="main-panel" *ngIf="form != undefined">
+        <div class="navbar navbar-default" id="mobnav">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" (click)="sidebarToggle()">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="admissions/{{id}}" >BACK</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-globe"></i>
+                                <b class="caret"></b>
+                                <span class="notification hidden-sm hidden-xs">5</span>
+                                <p class="hidden-lg hidden-md">
+                                    5 Notifications
+                                    <b class="caret"></b>
+                                </p>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Notification 1</a></li>
+                                <li><a href="#">Notification 2</a></li>
+                                <li><a href="#">Notification 3</a></li>
+                                <li><a href="#">Notification 4</a></li>
+                                <li><a href="#">Another notification</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-save"></i>
+                                <p class="hidden-lg hidden-md">Search</p>
+                            </a>
+                        </li>
+                    </ul>
         
-        <span *ngIf="admissionId">
-            <single-admission [(admissionid)]="admissionId" [(userid)]="id" [(form)]="form"></single-admission>
-            <button type="button" (click)="save()">Save</button>
-        </span>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#">
+                                <p>Account</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <p>Log out</p>
+                            </a>
+                        </li>
+                        <li class="separator hidden-lg hidden-md"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         
+        <div class="main-content col-md-12">
+            <span *ngIf="!admissionId">
+                <table style="margin-top:30px;">
+                    <tr>
+                        <th>Identifier</th><th>Age</th>
+                    </tr>
+                    <tr *ngFor="let admission of admissionList">
+                        <td>{{ admission.customId }}</td>
+                        <td>{{ admission.age}}</td>
+                        <td><button type="button" (click)="admissionId = admission._id">Open</button></td>
+                    </tr>
+                </table>
+            </span>
+            
+            <span *ngIf="admissionId">
+                
+                <single-admission [(admissionid)]="admissionId" [(userid)]="id" [(form)]="form"></single-admission>
+                <single-admission [(admissionid)]="admissionId" [(userid)]="id" [(form)]="form"></single-admission>
+                <button type="button" (click)="save()">Save</button>
+            </span>
+        </div>
     </div>
 </div>
