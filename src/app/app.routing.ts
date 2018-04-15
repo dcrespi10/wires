@@ -6,14 +6,14 @@ import { RegisterComponent } from './register/index';
 import { CentreComponent } from './centre/index';
 import { AdmissionsComponent } from './admissions/index';
 import { AccountComponent } from './account/index';
-import { AuthGuard } from './_guards/index';
+import { AuthGuard, ConfirmDeactivateGuard } from './_guards/index';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent }, 
     { path: 'centre/:id', component: CentreComponent }, 
-    { path: 'admissions/:id', component: AdmissionsComponent }, 
+    { path: 'admissions/:id', component: AdmissionsComponent, canDeactivate: [ConfirmDeactivateGuard] }, 
     { path: 'account/:id', component: AccountComponent }, 
 
     // otherwise redirect to home

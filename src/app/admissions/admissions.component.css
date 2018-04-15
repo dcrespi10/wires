@@ -1,6 +1,11 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 #mobnav {
     position: fixed;
     width: 100%;
     background-color: white;
     z-index: 100000;
   }
+
+i {
+  font-size: 40px;
+}

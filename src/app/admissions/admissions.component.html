@@ -6,50 +6,28 @@
     <div class="main-panel" *ngIf="form != undefined">
         <div class="navbar navbar-default" id="mobnav">
             <div class="container-fluid">
-                
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
-                        <li class="dropdown">
-                            <a class="navbar-brand" href="admissions/{{id}}" >
-                                <i class="pe-7s-id"></i>                        
-                            </a>
-                            <!--a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-globe"></i>
-                                <b class="caret"></b>
-                                <span class="notification hidden-sm hidden-xs">5</span>
-                                <p class="hidden-lg hidden-md">
-                                    5 Notifications
-                                    <b class="caret"></b>
-                                </p>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Notification 1</a></li>
-                                <li><a href="#">Notification 2</a></li>
-                                <li><a href="#">Notification 3</a></li>
-                                <li><a href="#">Notification 4</a></li>
-                                <li><a href="#">Another notification</a></li>
-                            </ul-->
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-save"></i>
-                                <p class="hidden-lg hidden-md">Search</p>
+                        <li class="dropdown" *ngIf="admissionId">                            
+                            <a class="navbar-brand" matTooltip="Back to admissions list" (click)="loadAdmissionsList()" >
+                                <i class="pe-7s-back-2" ></i>                                  
                             </a>
                         </li>
-                    </ul>
-        
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="#">
-                                <p>Account</p>
+                        <li *ngIf="admissionId">
+                            <a (click)="saveAdmission()" matTooltip="Save">
+                                <i class="pe-7s-diskette"></i>                                
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
-                                <p>Log out</p>
-                            </a>
+                        <li *ngIf="!admissionId">
+                            <a (click)="admissionId = 'newid'; model={}" matTooltip="New admission">
+                                <i class="pe-7s-plus"></i>                                    
+                            </a>                                
                         </li>
-                        <li class="separator hidden-lg hidden-md"></li>
+                        <li *ngIf="!admissionId">
+                            <a matTooltip="Export data">
+                                <i class="pe-7s-server"></i>                                    
+                            </a>                                
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -57,24 +35,22 @@
         
         <div class="main-content col-md-12">
             <span *ngIf="!admissionId">
-                <table style="margin-top:30px;">
-                    <tr>
-                        <th>Identifier</th><th>Age</th>
-                    </tr>
-                    <tr *ngFor="let admission of admissionList">
-                        <td>{{ admission.customId }}</td>
-                        <td>{{ admission.age}}</td>
-                        <td><button type="button" (click)="admissionId = admission._id">Open</button></td>
-                    </tr>
-                </table>
-            </span>
-            
-            <span *ngIf="admissionId">
+                <div style="margin-top:40px;">
+                    <mat-nav-list>
+                        <mat-list-item *ngFor="let admission of admissionList">
+                            <a matLine>{{ admission.customId }} |
+                            {{ admission.age }}, status: COMPLETED</a>
+                            <button mat-button color="warn" (click)="loadAdmission(admission._id)">Open</button>
+                        </mat-list-item>
+                    </mat-nav-list>
+                </div>                    
                 
-                <single-admission [(admissionid)]="admissionId" [(userid)]="id" [(form)]="form"></single-admission>
-                <single-admission [(admissionid)]="admissionId" [(userid)]="id" [(form)]="form"></single-admission>
-                <button type="button" (click)="save()">Save</button>
+            </span>            
+            <span *ngIf="admissionId">
+                <single-admission [(admissionid)]="admissionId" [(userid)]="id" 
+                [(form)]="form" [(model)]="model" (valueHasChangedEmitter)="valueHasChanged($event)"
+                [unsavedState]="unsaved"></single-admission>                                
             </span>
-        </div>
+        </div>        
     </div>
 </div>

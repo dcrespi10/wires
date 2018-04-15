@@ -1,5 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Router, CanActivate, CanDeactivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { AdmissionsComponent } from '../admissions/admissions.component';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -16,4 +17,14 @@ export class AuthGuard implements CanActivate {
         this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
         return false;
     }
+}
+
+export class ConfirmDeactivateGuard implements CanDeactivate<AdmissionsComponent> {
+
+  canDeactivate(target: AdmissionsComponent) {
+    if(target.hasChanges()){
+        return window.confirm('Data have been modified. Do you really want to exit?');
+    }
+    return true;
+  }
 }

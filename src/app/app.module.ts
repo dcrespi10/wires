@@ -5,7 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent }  from './app.component';
 import { routing }        from './app.routing';
 import { AlertComponent } from './_directives/index';
-import { AuthGuard } from './_guards/index';
+import { AuthGuard, ConfirmDeactivateGuard } from './_guards/index';
 import { JwtInterceptorProvider, ErrorInterceptorProvider } from './_helpers/index';
 import { AlertService, AuthenticationService, UserService, CrfService, DataService } from './_services/index';
 import { HomeComponent } from './home/index';
@@ -16,13 +16,26 @@ import { AdmissionsComponent } from './admissions/admissions.component';
 import { CentreComponent } from './centre/centre.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SingleAdmissionComponent } from './single-admission/single-admission.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { MatInputModule, MatCardModule, MatRadioModule, MatCheckboxModule, 
+    MatTooltipModule, MatListModule, MatButtonModule, MatSnackBarModule } from '@angular/material/';
+
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         HttpClientModule,
-        routing
+        routing,
+        BrowserAnimationsModule,
+        MatInputModule,
+        MatCardModule,
+        MatRadioModule,
+        MatCheckboxModule,
+        MatListModule,
+        MatButtonModule, 
+        MatSnackBarModule,
+        MatTooltipModule
     ],
     declarations: [
         AppComponent,
@@ -44,7 +57,8 @@ import { SingleAdmissionComponent } from './single-admission/single-admission.co
         CrfService,
         DataService,
         JwtInterceptorProvider,
-        ErrorInterceptorProvider
+        ErrorInterceptorProvider,
+        ConfirmDeactivateGuard
     ],
     bootstrap: [AppComponent]
 })
