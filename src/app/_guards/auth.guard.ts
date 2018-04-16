@@ -1,6 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { Router, CanActivate, CanDeactivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AdmissionsComponent } from '../admissions/admissions.component';
+import { CentreComponent } from '../centre/centre.component';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -28,3 +29,13 @@ export class ConfirmDeactivateGuard implements CanDeactivate<AdmissionsComponent
     return true;
   }
 }
+
+export class ConfirmDeactivateCentreGuard implements CanDeactivate<CentreComponent> {
+
+    canDeactivate(target: CentreComponent) {
+      if(target.hasChanges()){
+          return window.confirm('Data have been modified. Do you really want to exit?');
+      }
+      return true;
+    }
+  }

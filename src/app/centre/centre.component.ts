@@ -55,7 +55,7 @@ export class CentreComponent implements OnInit {
     }
   }
 
-  loadAdmission(centreDataId: string){
+  loadCentreData(centreDataId: string){
     this.centreDataId = centreDataId;
     this.centresDataService.getByIdFromCollection(this.id, this.centreDataId).subscribe(
       data => {

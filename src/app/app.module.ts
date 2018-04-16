@@ -5,7 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent }  from './app.component';
 import { routing }        from './app.routing';
 import { AlertComponent } from './_directives/index';
-import { AuthGuard, ConfirmDeactivateGuard } from './_guards/index';
+import { AuthGuard, ConfirmDeactivateGuard, ConfirmDeactivateCentreGuard } from './_guards/index';
 import { JwtInterceptorProvider, ErrorInterceptorProvider } from './_helpers/index';
 import { AlertService, AuthenticationService, UserService, CrfService, DataService } from './_services/index';
 import { HomeComponent } from './home/index';
@@ -58,7 +58,8 @@ import { MatInputModule, MatCardModule, MatRadioModule, MatCheckboxModule,
         DataService,
         JwtInterceptorProvider,
         ErrorInterceptorProvider,
-        ConfirmDeactivateGuard
+        ConfirmDeactivateGuard,
+        ConfirmDeactivateCentreGuard
     ],
     bootstrap: [AppComponent]
 })

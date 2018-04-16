@@ -38,8 +38,8 @@
                 <div style="margin-top:40px;">
                     <mat-nav-list>
                         <mat-list-item *ngFor="let centreData of centreDataList">
-                            <a matLine>{{ centreData.customId }} |
-                            {{ centreData.age }}, status: COMPLETED</a>
+                            <a matLine>
+                            {{ centreData.City }}, status: COMPLETED</a>
                             <button mat-button color="warn" (click)="loadCentreData(centreData._id)">Open</button>
                         </mat-list-item>
                     </mat-nav-list>
