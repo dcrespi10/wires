@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService, AuthenticationService, CrfService, DataService } from '../_services/index';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { Crf } from '../_models/index';
 
 @Component({
@@ -17,6 +17,7 @@ export class AdmissionsComponent implements OnInit {
   admissionList: any=[];
   admissionId: string;
   unsaved: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -74,7 +75,6 @@ export class AdmissionsComponent implements OnInit {
     }
 
     hasChanges(): boolean{
-      console.log("has changed?", this.unsaved);
       return this.unsaved;
     }
 

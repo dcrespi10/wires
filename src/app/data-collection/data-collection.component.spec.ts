@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SingleAdmissionComponent } from './single-admission.component';
+import { DataCollectionComponent } from './single-admission.component';
 
-describe('SingleAdmissionComponent', () => {
-  let component: SingleAdmissionComponent;
-  let fixture: ComponentFixture<SingleAdmissionComponent>;
+describe('DataCollectionComponent', () => {
+  let component: DataCollectionComponent;
+  let fixture: ComponentFixture<DataCollectionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SingleAdmissionComponent ]
+      declarations: [ DataCollectionComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SingleAdmissionComponent);
+    fixture = TestBed.createComponent(DataCollectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

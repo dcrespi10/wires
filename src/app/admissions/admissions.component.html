@@ -47,9 +47,9 @@
                 
             </span>            
             <span *ngIf="admissionId">
-                <single-admission [(admissionid)]="admissionId" [(userid)]="id" 
+                <data-collection [(collectionId)]="admissionId" [(userid)]="id" 
                 [(form)]="form" [(model)]="model" (valueHasChangedEmitter)="valueHasChanged($event)"
-                [unsavedState]="unsaved"></single-admission>                                
+                [unsavedState]="unsaved"></data-collection>                                
             </span>
         </div>        
     </div>

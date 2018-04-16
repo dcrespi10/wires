@@ -15,7 +15,7 @@ import { AccountComponent } from './account/account.component';
 import { AdmissionsComponent } from './admissions/admissions.component';
 import { CentreComponent } from './centre/centre.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { SingleAdmissionComponent } from './single-admission/single-admission.component';
+import { DataCollectionComponent } from './data-collection/data-collection.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatInputModule, MatCardModule, MatRadioModule, MatCheckboxModule, 
     MatTooltipModule, MatListModule, MatButtonModule, MatSnackBarModule } from '@angular/material/';
@@ -47,7 +47,7 @@ import { MatInputModule, MatCardModule, MatRadioModule, MatCheckboxModule,
         AdmissionsComponent,
         CentreComponent,
         SidebarComponent,
-        SingleAdmissionComponent
+        DataCollectionComponent
     ],
     providers: [
         AuthGuard,

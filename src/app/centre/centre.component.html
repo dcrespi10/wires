@@ -2,74 +2,54 @@
     <div class="sidebar" data-color="red" data-image="">
         <sidebar></sidebar>
         <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
-    </div>
-    
-    <div class="main-panel col-md-6 col-md-offset-3" *ngIf="form != undefined">
-        <table>
-            <p *ngFor="let page of form.pages">
-                <tr class="variables">
-                    <td><h1>{{ page.label }}</h1></td>      
-                    <td>
-                        <h4 *ngIf="uncompletedPages.indexOf(page.page) == -1 ">Section is completed</h4>
-                        <h4 *ngIf="uncompletedPages.indexOf(page.page) > -1 ">Section is NOT completed</h4>
-                    </td>
-                </tr>
-                
-                <tr *ngFor="let variable of page.variables" class="variables">
-                    <span *ngIf="variable.type=='string' && visibilityCheck(variable.name, variable.visible)">
-                        <td>
-                            {{ variable.label }}                            
-                        </td>
-                        <td>
-                            <input type="text" [(ngModel)]="model[variable.name]" />
-                        </td>
-                    </span>
-                    <span *ngIf="variable.type=='integer' && visibilityCheck(variable.name, variable.visible)">
-                        <td>
-                            {{ variable.label }}                            
-                        </td>
-                        <td>
-                            <input type="number" min="0" step="1" [(ngModel)]="model[variable.name]" />
-                        </td>
-                    </span>
-                    <span *ngIf="variable.type=='single' && visibilityCheck(variable.name, variable.visible)">
-                        <td>
-                            {{ variable.label }}
-                        </td>
-                        <td>
-                            <table class="valuestable">
-                                <tr *ngFor="let value of variable.values" class="a">
-                                    <td>
-                                    <input type="radio" [name]="variable.name" 
-                                        [(ngModel)]="model[variable.name]"
-                                        [value]="value.name" >
-                                        
-                                    </td>
-                                    <td>{{ value.label }}</td> 
-                                </tr>
-                            </table>
-                        </td>
-                    </span>
-                    <span *ngIf="variable.type=='multi' && visibilityCheck(variable.name, variable.visible)">
-                        <td>{{ variable.label }}</td>
-                        <td>
-                            <table class="valuestable">
-                                <tr *ngFor="let value of variable.values">
-                                    <td>
-                                    <input type="checkbox" [name]="value.name" 
-                                    (click)="setChecklistValue(variable.name, value.name)"    
-                                    [checked]="model[variable.name] && model[variable.name].indexOf(value.name) > -1"
-                                    [value]="value.name">
-                                    </td>
-                                    <td>{{ value.label }}</td> 
-                                </tr>
-                            </table>                            
-                        </td>
-                    </span>                    
-                    <br/>
-                </tr>  
-            </p>
-        </table>
-        <button type="button" (click)="save()">Save</button>
+    </div>      
+    <div class="main-panel" *ngIf="form != undefined">
+        <div class="navbar navbar-default" id="mobnav">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li class="dropdown" *ngIf="centreDataId">                            
+                            <a class="navbar-brand" matTooltip="Back to centre's data list" (click)="loadCentresDataList()" >
+                                <i class="pe-7s-back-2" ></i>                                  
+                            </a>
+                        </li>
+                        <li *ngIf="centreDataId">
+                            <a (click)="save()" matTooltip="Save">
+                                <i class="pe-7s-diskette"></i>                                
+                            </a>
+                        </li>
+                        <li *ngIf="!centreDataId">
+                            <a (click)="centreDataId = 'newid'; model={}" matTooltip="New centre's data">
+                                <i class="pe-7s-plus"></i>                                    
+                            </a>                                
+                        </li>
+                        <li *ngIf="!centreDataId">
+                            <a matTooltip="Export data">
+                                <i class="pe-7s-server"></i>                                    
+                            </a>                                
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content col-md-12">
+            <span *ngIf="!centreDataId">
+                <div style="margin-top:40px;">
+                    <mat-nav-list>
+                        <mat-list-item *ngFor="let centreData of centreDataList">
+                            <a matLine>{{ centreData.customId }} |
+                            {{ centreData.age }}, status: COMPLETED</a>
+                            <button mat-button color="warn" (click)="loadCentreData(centreData._id)">Open</button>
+                        </mat-list-item>
+                    </mat-nav-list>
+                </div>                                    
+            </span>            
+            <span *ngIf="centreDataId">
+                <data-collection [(collectionId)]="centreDataId" [(userid)]="id" 
+                [(form)]="form" [(model)]="model" (valueHasChangedEmitter)="valueHasChanged($event)"
+                [unsavedState]="unsaved"></data-collection>                                
+            </span>
+        </div>        
     </div>
 </div>
