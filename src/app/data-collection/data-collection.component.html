@@ -11,6 +11,13 @@
             <mat-card-content>
                 <table>
                     <tr *ngFor="let variable of page.variables" class="variables">
+                        <span *ngIf="variable.type=='date' && visibilityCheck(variable.name, variable.visible)">
+                            <td>
+                                <mat-form-field class="example-full-width">
+                                    <input matInput type="date" placeholder="{{ variable.label }}" (ngModelChange)="emitValueChanged()" [(ngModel)]="model[variable.name]">
+                                </mat-form-field>
+                            </td>
+                        </span>
                         <span *ngIf="variable.type=='string' && visibilityCheck(variable.name, variable.visible)">
                             <td>
                                 <mat-form-field class="example-full-width">

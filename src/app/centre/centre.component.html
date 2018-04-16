@@ -39,7 +39,7 @@
                     <mat-nav-list>
                         <mat-list-item *ngFor="let centreData of centreDataList">
                             <a matLine>
-                            {{ centreData.City }}, status: COMPLETED</a>
+                            Validity: from {{ centreData.start }} to {{ centreData.end }} | status: COMPLETED</a>
                             <button mat-button color="warn" (click)="loadCentreData(centreData._id)">Open</button>
                         </mat-list-item>
                     </mat-nav-list>
