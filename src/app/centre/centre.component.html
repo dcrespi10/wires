@@ -29,6 +29,8 @@
                             </a>                                
                         </li>
                     </ul>
+                    <span *ngIf="centreDataId && !model.complete">model not completed</span>
+                    <span *ngIf="centreDataId && model.complete">model completed</span>
                 </div>
             </div>
         </div>
@@ -48,7 +50,7 @@
             <span *ngIf="centreDataId">
                 <data-collection [(collectionId)]="centreDataId" [(userid)]="id" 
                 [(form)]="form" [(model)]="model" (valueHasChangedEmitter)="valueHasChanged($event)"
-                [unsavedState]="unsaved"></data-collection>                                
+                [unsavedState]="unsaved"></data-collection>                                               
             </span>
         </div>        
     </div>

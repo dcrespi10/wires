@@ -74,9 +74,7 @@ export class CentreComponent implements OnInit {
   hasChanges(): boolean{
     return this.unsaved;
   }
-  
   save(){
-    //this.setUnCompletedSection();
     if (this.model.userid){
       this.centresDataService.update(this.model).subscribe(
         data => {

@@ -19,12 +19,14 @@ import { DataCollectionComponent } from './data-collection/data-collection.compo
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatInputModule, MatCardModule, MatRadioModule, MatCheckboxModule, 
     MatTooltipModule, MatListModule, MatButtonModule, MatSnackBarModule } from '@angular/material/';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
+        ReactiveFormsModule,
         HttpClientModule,
         routing,
         BrowserAnimationsModule,

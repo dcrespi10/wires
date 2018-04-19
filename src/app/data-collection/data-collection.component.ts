@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AlertService, AuthenticationService, CrfService, DataService } from '../_services/index';
 
-
 @Component({
   selector: 'data-collection',
   templateUrl: './data-collection.component.html',
@@ -18,26 +17,53 @@ export class DataCollectionComponent implements OnInit {
   uncompletedPages:any=[];
   visibilities={};
   id:any;
-  
+
+  errorsList = [
+    {"errorId":1, "label":"Starting date cannot be greater than ending date", "formula":"this.model.start >= this.model.end"}
+  ];
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
   emitValueChanged(){
     this.unsavedState = true;
     this.valueHasChangedEmitter.emit(true);
+    this.checkCompleteness();
   }
   
+  errorIsVisible(errorString){
+    return eval(errorString);
+  }
+
   visibilityCheck(variableName, visibility){
-    if (visibility === undefined){
+    if (visibility === undefined){      
       this.visibilities[variableName] = true;
     }else{
       this.visibilities[variableName] = eval(visibility);
+      
     }
-    return this.visibilities[variableName];
+    if (!this.visibilities[variableName]){
+      this.model[variableName] = undefined;
+    }
+    return this.visibilities[variableName];    
   }
-  setUnCompletedSection(){
-
+  
+  checkCompleteness(){
+    this.model.complete = true;
+    this.uncompletedPages = [];
+    for (var pindex in this.form.pages){
+      var page = this.form.pages[pindex];
+      for (var vindex in page.variables){
+        var variableName = page.variables[vindex].name;
+        if (!this.model[variableName] && page.variables[vindex].mandatory == true && this.visibilities[variableName]){
+            this.model.complete = false;
+            this.uncompletedPages.push(page.page);            
+        }
+      }
+    }
   }
 
   formulaValue(variableName, formula){
@@ -50,6 +76,7 @@ export class DataCollectionComponent implements OnInit {
   }
 
   setChecklistValue(checklistName, value){
+    console.log(this.model[checklistName]);
     if (checklistName in this.model){
       var index = this.model[checklistName].indexOf(value, 0);
       if (index > -1) {
@@ -63,5 +90,6 @@ export class DataCollectionComponent implements OnInit {
       this.model[checklistName] = [];
       this.model[checklistName].push(value);
     }
+    this.emitValueChanged();
   }
 }
