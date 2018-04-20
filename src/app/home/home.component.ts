@@ -19,6 +19,5 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
         // shall load news
     }
-
     
 }
