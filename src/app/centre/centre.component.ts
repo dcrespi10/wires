@@ -16,6 +16,8 @@ export class CentreComponent implements OnInit {
   centreDataList: any=[];
   centreDataId: string;
   unsaved: boolean = false; 
+  filterByStatusOptions = ['All', 'Errors', 'Uncomplete'];
+  filterByStatusSelected = 'All';
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +40,16 @@ export class CentreComponent implements OnInit {
    );   
   }
   
+  filteredRecord(centreData, filterType){
+    if (filterType=="Uncomplete"){
+      return centreData.complete != true;
+    }
+    if (filterType=="Errors"){
+      return centreData.hasErrors;
+    }
+    return true;
+  }
+
   loadCentresDataList(){
     var letExit = true;
     if (this.unsaved){

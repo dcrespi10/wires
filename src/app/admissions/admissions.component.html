@@ -28,6 +28,18 @@
                                 <i class="pe-7s-server"></i>                                    
                             </a>                                
                         </li>
+                        <li *ngIf="!admissionId">
+                            <mat-form-field style="padding: 5px 10px 0px 0px;margin: 10px 3px 0px 0px;">
+                                <mat-select [(value)]="filterByStatusSelected" placeholder="Show">
+                                    <mat-option *ngFor="let mode of filterByStatusOptions" [value]="mode">
+                                    {{ mode }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>                           
+                        </li>
+                        <li *ngIf="!admissionId">
+                            <input [(ngModel)]="filterByText" matInput placeholder="Search" style="padding: 10px 5px 0px 0px;margin: 10px 3px 0px 0px;">
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -37,17 +49,19 @@
             <span *ngIf="!admissionId">
                 <div style="margin-top:40px;">
                     <mat-nav-list>
-                        <mat-list-item *ngFor="let admission of admissionList">                             
-                            <a matLine>
-                                {{ admission.customId }}, age:
-                                {{ admission.age }} | Record                             
-                                <span *ngIf="admission.complete">completed</span>
-                                <span *ngIf="!admission.complete">not completed</span>
-                                <span *ngIf="admission.hasErrors">with</span>
-                                <span *ngIf="!admission.hasErrors">without</span> errors                            
-                            </a>
-                            <button mat-button color="warn" (click)="loadAdmission(admission._id)">Open</button>
-                        </mat-list-item>
+                        <span *ngFor="let admission of admissionList">
+                            <mat-list-item *ngIf="filteredRecord(admission, filterByStatusSelected)">                             
+                                <a matLine>
+                                    {{ admission.customId }}, age:
+                                    {{ admission.age }} | Record                             
+                                    <span *ngIf="admission.complete">completed</span>
+                                    <span *ngIf="!admission.complete">not completed</span>
+                                    <span *ngIf="admission.hasErrors">with</span>
+                                    <span *ngIf="!admission.hasErrors">without</span> errors                            
+                                </a>
+                                <button mat-button color="warn" (click)="loadAdmission(admission._id)">Open</button>
+                            </mat-list-item>
+                        </span>
                     </mat-nav-list>
                 </div>                    
                 

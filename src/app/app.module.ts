@@ -18,7 +18,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { DataCollectionComponent } from './data-collection/data-collection.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatInputModule, MatCardModule, MatRadioModule, MatCheckboxModule, 
-    MatTooltipModule, MatListModule, MatButtonModule, MatSnackBarModule } from '@angular/material/';
+    MatTooltipModule, MatListModule, MatButtonModule, MatSnackBarModule, MatSelectModule } from '@angular/material/';
 import {ReactiveFormsModule} from '@angular/forms';
 
 
@@ -37,7 +37,8 @@ import {ReactiveFormsModule} from '@angular/forms';
         MatListModule,
         MatButtonModule, 
         MatSnackBarModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatSelectModule
     ],
     declarations: [
         AppComponent,

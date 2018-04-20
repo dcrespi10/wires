@@ -17,6 +17,9 @@ export class AdmissionsComponent implements OnInit {
   admissionList: any=[];
   admissionId: string;
   unsaved: boolean = false;
+  filterByStatusOptions = ['All', 'Errors', 'Uncomplete'];
+  filterByStatusSelected = 'All';
+  filterByText: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +41,19 @@ export class AdmissionsComponent implements OnInit {
            this.loadAdmissionsList();   
         }
      );     
+    }
+
+    filteredRecord(admission, filterType:string){
+      var state:boolean = true;
+      var text:boolean = admission.customId.indexOf(this.filterByText) > -1 || this.filterByText == undefined || this.filterByText.length == 0;
+      
+      if (filterType=="Uncomplete"){
+        state = admission.complete != true;
+      }
+      else if (filterType=="Errors"){
+        state = admission.hasErrors;
+      }
+      return state && text;
     }
 
     loadAdmissionsList(){

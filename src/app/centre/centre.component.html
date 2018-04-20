@@ -28,6 +28,15 @@
                                 <i class="pe-7s-server"></i>                                    
                             </a>                                
                         </li>
+                        <li *ngIf="!centreDataId">
+                            <mat-form-field style="padding: 5px 10px 0px 0px;margin: 10px 3px 0px 0px;">
+                                <mat-select [(value)]="filterByStatusSelected" placeholder="Show">
+                                    <mat-option *ngFor="let mode of filterByStatusOptions" [value]="mode">
+                                    {{ mode }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>                           
+                        </li>
                     </ul>                    
                 </div>
             </div>
@@ -37,17 +46,19 @@
             <span *ngIf="!centreDataId">
                 <div style="margin-top:40px;">
                     <mat-nav-list>
-                        <mat-list-item *ngFor="let centreData of centreDataList">
-                            <a matLine>
-                                Validity: from {{ centreData.start }} to {{ centreData.end }} 
-                                | Record                             
-                                <span *ngIf="centreData.complete">completed</span>
-                                <span *ngIf="!centreData.complete">not completed</span>
-                                <span *ngIf="centreData.hasErrors">with</span>
-                                <span *ngIf="!centreData.hasErrors">without</span> errors                            
-                            </a>
-                            <button mat-button color="warn" (click)="loadCentreData(centreData._id)">Open</button>
-                        </mat-list-item>
+                        <span *ngFor="let centreData of centreDataList">
+                            <mat-list-item  *ngIf="filteredRecord(centreData, filterByStatusSelected)">
+                                <a class="list" matLine>
+                                    Validity: from {{ centreData.start }} to {{ centreData.end }} 
+                                    | Record                             
+                                    <span *ngIf="centreData.complete">completed</span>
+                                    <span *ngIf="!centreData.complete">not completed</span>
+                                    <span *ngIf="centreData.hasErrors">with</span>
+                                    <span *ngIf="!centreData.hasErrors">without</span> errors                            
+                                </a>
+                                <button mat-button color="warn" (click)="loadCentreData(centreData._id)">Open</button>
+                            </mat-list-item>
+                        </span>
                     </mat-nav-list>
                 </div>                                    
             </span>            
