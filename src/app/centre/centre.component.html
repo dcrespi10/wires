@@ -19,7 +19,7 @@
                             </a>
                         </li>
                         <li *ngIf="!centreDataId">
-                            <a (click)="centreDataId = 'newid'; model={}" matTooltip="New centre's data">
+                            <a (click)="centreDataId = 'newid'; model={complete:false, hasErrors:false}" matTooltip="New centre's data">
                                 <i class="pe-7s-plus"></i>                                    
                             </a>                                
                         </li>
@@ -28,9 +28,7 @@
                                 <i class="pe-7s-server"></i>                                    
                             </a>                                
                         </li>
-                    </ul>
-                    <span *ngIf="centreDataId && !model.complete">model not completed</span>
-                    <span *ngIf="centreDataId && model.complete">model completed</span>
+                    </ul>                    
                 </div>
             </div>
         </div>
@@ -41,7 +39,13 @@
                     <mat-nav-list>
                         <mat-list-item *ngFor="let centreData of centreDataList">
                             <a matLine>
-                            Validity: from {{ centreData.start }} to {{ centreData.end }} | status: COMPLETED</a>
+                                Validity: from {{ centreData.start }} to {{ centreData.end }} 
+                                | Record                             
+                                <span *ngIf="centreData.complete">completed</span>
+                                <span *ngIf="!centreData.complete">not completed</span>
+                                <span *ngIf="centreData.hasErrors">with</span>
+                                <span *ngIf="!centreData.hasErrors">without</span> errors                            
+                            </a>
                             <button mat-button color="warn" (click)="loadCentreData(centreData._id)">Open</button>
                         </mat-list-item>
                     </mat-nav-list>

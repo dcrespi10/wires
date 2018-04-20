@@ -16,26 +16,40 @@ export class DataCollectionComponent implements OnInit {
   @Output() valueHasChangedEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
   uncompletedPages:any=[];
   visibilities={};
+  errors={};
   id:any;
-
-  errorsList = [
-    {"errorId":1, "label":"Starting date cannot be greater than ending date", "formula":"this.model.start >= this.model.end"}
-  ];
-
   constructor() {}
 
   ngOnInit() {
-    
+    //this.checkCompleteness();
+    this.hasErrors();
+  }
+
+  hasErrors(){
+    var errorsFound = false;
+    for (var idx in this.errors){
+      if (this.errors[idx] == true){
+        errorsFound = true;
+        break;
+      }
+    }
+    this.model.hasErrors = errorsFound;
+    return errorsFound;
   }
 
   emitValueChanged(){
     this.unsavedState = true;
     this.valueHasChangedEmitter.emit(true);
     this.checkCompleteness();
+    this.hasErrors();
   }
   
-  errorIsVisible(errorString){
-    return eval(errorString);
+
+
+  errorIsVisible(errorId, errorString){
+    var errorState = eval(errorString);
+    this.errors[errorId] = errorState;    
+    return errorState;
   }
 
   visibilityCheck(variableName, visibility){
@@ -67,17 +81,18 @@ export class DataCollectionComponent implements OnInit {
   }
 
   formulaValue(variableName, formula){
+    var value = "";
     if (formula === undefined){
       return;
     }else{
-      this.model[variableName] = eval(formula);
+      value = eval(formula);      
     }    
-    console.log(this.model[variableName]);
+    this.model[variableName] = value;
+    return value;
   }
 
   setChecklistValue(checklistName, value){
-    console.log(this.model[checklistName]);
-    if (checklistName in this.model){
+    if (this.model[checklistName]){
       var index = this.model[checklistName].indexOf(value, 0);
       if (index > -1) {
         this.model[checklistName].splice(index, 1);
@@ -90,6 +105,7 @@ export class DataCollectionComponent implements OnInit {
       this.model[checklistName] = [];
       this.model[checklistName].push(value);
     }
+    console.log(this.model[checklistName]);
     this.emitValueChanged();
   }
 }

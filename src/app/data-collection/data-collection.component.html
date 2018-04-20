@@ -1,14 +1,17 @@
 <div *ngIf="form">
     <mat-card class="example-card">
         <mat-card-header>
-            <mat-card-title><h2>Errors list</h2></mat-card-title>
+            <mat-card-title><h2>Record status</h2></mat-card-title>
             <mat-card-subtitle>
-                <span>Record has errors</span>    
+                <span *ngIf="model.complete">Record has been completed. </span>    
+                <span *ngIf="!model.complete">Record has not been completed. </span>    
+                <span *ngIf="model.hasErrors">Record has errors. </span>    
+                <span *ngIf="!model.hasErrors">No errors detected. </span>    
             </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            <span *ngFor="let error of errorsList">
-                <mat-error *ngIf="errorIsVisible(error.formula)">{{ error.label }}</mat-error>
+            <span *ngFor="let error of form.errors">
+                <mat-error *ngIf="errorIsVisible(error.errorId, error.formula)">{{ error.label }}</mat-error>
             </span>
         </mat-card-content>
     </mat-card>
@@ -24,6 +27,9 @@
             <mat-card-content>
                 <table>
                     <tr *ngFor="let variable of page.variables" class="variables">
+                        <span *ngIf="variable.type=='label' && visibilityCheck(variable.name, variable.visible)">
+                            {{ variable.label }}: {{ formulaValue(variable.name, variable.formula) }}
+                        </span>
                         <span *ngIf="variable.type=='date' && visibilityCheck(variable.name, variable.visible)">
                             <td>
                                 <mat-form-field class="example-full-width">
@@ -98,19 +104,11 @@
                                 </mat-error>                                    
                             </td>
                             <td>
-                                <table class="valuestable">
-                                    <tr *ngFor="let value of variable.values">
-                                        <td>
-                                            <mat-checkbox
-                                            [name]="value.name" 
-                                            (click)="setChecklistValue(variable.name, value.name)"    
-                                            [value]="value.name"
-                                            [checked]="model[variable.name] && model[variable.name].indexOf(value.name) > -1"
-                                            color="warn">{{ value.label }}</mat-checkbox>
-                                        </td>                                        
-                                    </tr>
-                                </table>                                                          
-                                {{ model[variable.name] | json }}
+                                <mat-selection-list [(ngModel)]="model[variable.name]" color="warn">
+                                    <mat-list-option [value]="value.name" class="mat-warn" *ngFor="let value of variable.values">
+                                        {{ value.label }}
+                                    </mat-list-option>
+                                </mat-selection-list>                                
                             </td>
                         </span>                    
                         <br/>

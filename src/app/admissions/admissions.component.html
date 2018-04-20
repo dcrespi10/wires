@@ -19,7 +19,7 @@
                             </a>
                         </li>
                         <li *ngIf="!admissionId">
-                            <a (click)="admissionId = 'newid'; model={}" matTooltip="New admission">
+                            <a (click)="admissionId = 'newid'; model={complete:false, hasErrors:false}" matTooltip="New admission">
                                 <i class="pe-7s-plus"></i>                                    
                             </a>                                
                         </li>
@@ -37,9 +37,15 @@
             <span *ngIf="!admissionId">
                 <div style="margin-top:40px;">
                     <mat-nav-list>
-                        <mat-list-item *ngFor="let admission of admissionList">
-                            <a matLine>{{ admission.customId }} |
-                            {{ admission.age }}, status: COMPLETED</a>
+                        <mat-list-item *ngFor="let admission of admissionList">                             
+                            <a matLine>
+                                {{ admission.customId }}, age:
+                                {{ admission.age }} | Record                             
+                                <span *ngIf="admission.complete">completed</span>
+                                <span *ngIf="!admission.complete">not completed</span>
+                                <span *ngIf="admission.hasErrors">with</span>
+                                <span *ngIf="!admission.hasErrors">without</span> errors                            
+                            </a>
                             <button mat-button color="warn" (click)="loadAdmission(admission._id)">Open</button>
                         </mat-list-item>
                     </mat-nav-list>
