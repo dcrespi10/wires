@@ -47,7 +47,7 @@
         
         <div class="main-content col-md-12">
             <span *ngIf="!admissionId">
-                <div style="margin-top:40px;">
+                <div style="margin-top:45px;">
                     <mat-nav-list>
                         <span *ngFor="let admission of admissionList">
                             <mat-list-item *ngIf="filteredRecord(admission, filterByStatusSelected)">                             
@@ -62,6 +62,11 @@
                                 <button mat-button color="warn" (click)="loadAdmission(admission._id)">Open</button>
                             </mat-list-item>
                         </span>
+                        <mat-list-item *ngIf="admissionList.length == 0">
+                            <a matLine>
+                                No admissions record to show. Add your first admission by clicking the PLUS icon!                            
+                            </a>   
+                        </mat-list-item>                        
                     </mat-nav-list>
                 </div>                    
                 

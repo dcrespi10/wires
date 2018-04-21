@@ -59,6 +59,11 @@
                                 <button mat-button color="warn" (click)="loadCentreData(centreData._id)">Open</button>
                             </mat-list-item>
                         </span>
+                        <mat-list-item *ngIf="centreDataList.length == 0">
+                            <a matLine>
+                                No centre's data record to show. Add your first data by clicking the PLUS icon!                            
+                            </a>   
+                        </mat-list-item>                        
                     </mat-nav-list>
                 </div>                                    
             </span>            

@@ -3,10 +3,41 @@
         <sidebar></sidebar>
         <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
     </div>
-
     <div class="main-panel">
-        <div class="col-md-6 col-md-offset-3">
-          Account works
+        <div>
+            <mat-card class="example-card">
+                <mat-card-header>
+                    <mat-card-title><h2>Account details for user</h2></mat-card-title>
+                    <mat-card-subtitle>
+                        username: {{ currentUser.username }}
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <div [ngClass]="{ 'has-error': !firstName.valid }">
+                        <mat-form-field class="example-full-width">
+                            <label for="firstName">First Name</label>
+                            <input matInput name="firstName" [(ngModel)]="currentUser.firstName" #firstName="ngModel" required />    
+                        </mat-form-field>
+                        <div *ngIf="!firstName.valid" class="help-block">First Name is required</div>
+                    </div>
+                    <div [ngClass]="{ 'has-error': !lastName.valid }">
+                        <mat-form-field class="example-full-width">
+                            <label for="lastName">Last Name</label>
+                            <input matInput name="lastName" [(ngModel)]="currentUser.lastName" #lastName="ngModel" required />    
+                        </mat-form-field>                            
+                        <div *ngIf=" !lastName.valid" class="help-block">Last Name is required</div>                            
+                    </div>
+                    <div [ngClass]="{ 'has-error': (mail.errors) }">
+                        <mat-form-field class="example-full-width">
+                            <label for="email">Email address</label>
+                            <input matInput type="email" name="mail" [(ngModel)]="currentUser.email" #mail="ngModel" required email/>
+                        </mat-form-field>
+                        <div *ngIf="mail.errors" class="help-block">Email address is not valid</div>
+                    </div>
+                    <button mat-raised-button [disabled]="!lastName.valid || ! firstName.valid || mail.errors"
+                    (click)="saveUser()" color="warn">Save</button>      
+                </mat-card-content>
+            </mat-card>
         </div>
     </div>
 </div>
