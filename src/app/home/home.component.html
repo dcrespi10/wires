@@ -5,11 +5,20 @@
     </div>
 
     <div class="main-panel">
-        <div class="col-md-6 col-md-offset-3">
-            <h1>Hi {{currentUser.firstName}}!</h1>
-            {{ currentUser._id }}
-            <h3>What do you want to do?</h3>
-            {{ newsContent}}
+        <div>
+            <span *ngFor="let n of news">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title><h2>{{ n.title }}</h2></mat-card-title>
+                        <mat-card-subtitle>
+                            {{ n.date }}
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        {{ n.text }}
+                    </mat-card-content>
+                </mat-card>
+            </span>
         </div>
     </div>
 </div>

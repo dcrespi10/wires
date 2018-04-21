@@ -9,11 +9,12 @@ import { appConfig } from '../app.config';
 export class AuthenticationService {
     constructor(private http: HttpClient) { }
 
-    login(username: string, password: string) {
+    login(username: string, password: string, rememberMe: boolean) {
         return this.http.post<any>(appConfig.apiUrl + '/users/authenticate', { username: username, password: password })
             .map(user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {
+                    user.rememberMe = rememberMe;
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                 }
@@ -23,7 +24,7 @@ export class AuthenticationService {
     }
 
     logout() {
-        // remove user from local storage to log user out
+        // remove user from local storage to log user out        
         localStorage.removeItem('currentUser');
     }
 }

@@ -1,5 +1,6 @@
 ﻿import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { EmailValidator } from '@angular/forms';
 
 import { AlertService, UserService } from '../_services/index';
 

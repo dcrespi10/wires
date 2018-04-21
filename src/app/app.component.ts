@@ -10,7 +10,10 @@ export class AppComponent {
 
     @HostListener('window:beforeunload', ['$event'])
     beforeunloadHandler(event) {
-        localStorage.removeItem('currentUser');
+        var user = JSON.parse(localStorage.getItem('currentUser'));
+        if (!user.rememberMe){
+            localStorage.removeItem('currentUser');    
+        }        
     }
     
 }
