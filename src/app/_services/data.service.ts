@@ -12,7 +12,7 @@ export class DataService {
         this.url = appConfig.apiUrl + '/'+ collectionName;
     }
     
-    getCollection(userid: string){
+    getCollection(userid: string, moduleName: string){
         return this.http.get(this.url + '/' + userid);
     }
 

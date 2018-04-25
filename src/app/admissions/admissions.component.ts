@@ -19,6 +19,11 @@ export class AdmissionsComponent implements OnInit {
   unsaved: boolean = false;
   moduleInstance: string;
   filterByStatusOptions = ['All', 'Errors', 'Uncomplete'];
+  moduleLabels = {
+    "wires": "Wires",
+    "openabdomen": "Open Abdomen",
+    "infections": "IAI"
+  }
   filterByStatusSelected = 'All';
   filterByText: string;
 
@@ -70,7 +75,7 @@ export class AdmissionsComponent implements OnInit {
       if (this.unsaved == false || letExit){
         this.admissionId = undefined;
         console.log(this.id);
-        this.dataService.getCollection(this.id).subscribe(
+        this.dataService.getCollection(this.id, this.moduleInstance).subscribe(
           data => {
             console.log(data);
             this.admissionList = data;
@@ -140,7 +145,7 @@ export class AdmissionsComponent implements OnInit {
     }
 
     getcrf() {
-      this.crfService.getCrf("admissionsdata")
+      this.crfService.getCrf("AdmissionsData")
           .subscribe(
               data => {
                   this.form = data;

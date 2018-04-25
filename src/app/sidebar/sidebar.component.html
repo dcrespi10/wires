@@ -16,17 +16,17 @@
             </a>
         </li>
         <li>
+            <a [routerLink]="['/account', currentUser._id]">
+                <i class="pe-7s-config"></i>
+                <p>Account settings</p>
+            </a>
+        </li>
+        <li>
             <a [routerLink]="['/centre', currentUser._id]">
               <i class="pe-7s-culture"></i>
               <p>Centre data</p>
             </a>
-        </li>
-        <li>
-            <a [routerLink]="['/account', currentUser._id]">
-              <i class="pe-7s-config"></i>
-              <p>Account settings</p>
-            </a>
-        </li>
+        </li>        
         <li>
             <a [routerLink]="['/wires', currentUser._id, 'wires']">
               <i class="pe-7s-id"></i>
@@ -53,24 +53,3 @@
         </li>                    
     </ul>
 </div>
-
-
-<!--
-<ul>
-  <li>
-      <a [routerLink]="['/home']">Back to home</a>
-  </li>
-  <li>
-      <a [routerLink]="['/centre', currentUser._id]">Centre's data</a>
-  </li>
-  <li>
-      <a [routerLink]="['/account', currentUser._id]">Personal data</a>
-  </li>
-  <li>
-      <a [routerLink]="['/admissions', currentUser._id]">Admissions</a>
-  </li>
-  <li>
-      <a [routerLink]="['/login']">Logout</a>
-  </li>
-</ul>
--->

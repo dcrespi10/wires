@@ -1,7 +1,7 @@
 <div *ngIf="form">
     <mat-card class="example-card">
         <mat-card-header>
-            <mat-card-title><h2>Record status</h2></mat-card-title>
+            <mat-card-title><h2>{{ moduleLabels[model.module] }}: Record status</h2></mat-card-title>
             <mat-card-subtitle>
                 <span *ngIf="model.complete">Record has been completed. </span>    
                 <span *ngIf="!model.complete">Record has not been completed. </span>    

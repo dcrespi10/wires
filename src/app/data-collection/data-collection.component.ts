@@ -18,6 +18,11 @@ export class DataCollectionComponent implements OnInit {
   visibilities={};
   pageVisibilities={};
   errors={};
+  moduleLabels = {
+    "wires": "Wires",
+    "openabdomen": "Open Abdomen",
+    "infections": "IAI"
+  };
   id:any;
   constructor() {}
 
