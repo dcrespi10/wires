@@ -16,6 +16,7 @@ export class DataCollectionComponent implements OnInit {
   @Output() valueHasChangedEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
   uncompletedPages:any=[];
   visibilities={};
+  pageVisibilities={};
   errors={};
   id:any;
   constructor() {}
@@ -23,6 +24,12 @@ export class DataCollectionComponent implements OnInit {
   ngOnInit() {
     //this.checkCompleteness();
     this.hasErrors();
+  }
+
+  getRandomBlock(variableName){
+    //randomization service must be called
+    var value = 'A';
+    this.model[variableName] = value;    
   }
 
   hasErrors(){
@@ -43,8 +50,6 @@ export class DataCollectionComponent implements OnInit {
     this.checkCompleteness();
     this.hasErrors();
   }
-  
-
 
   errorIsVisible(errorId, errorString){
     var errorState = eval(errorString);
@@ -52,17 +57,29 @@ export class DataCollectionComponent implements OnInit {
     return errorState;
   }
 
-  visibilityCheck(variableName, visibility){
-    if (visibility === undefined){      
-      this.visibilities[variableName] = true;
-    }else{
-      this.visibilities[variableName] = eval(visibility);
-      
+  visibilityCheck(variableName, visibility, objectType="variable"){
+    if (objectType == "variable"){
+        if (visibility === undefined){      
+        this.visibilities[variableName] = true;
+      }else{
+        this.visibilities[variableName] = eval(visibility);        
+      }
+      if (!this.visibilities[variableName]){
+        this.model[variableName] = undefined;
+      }
+      return this.visibilities[variableName];    
     }
-    if (!this.visibilities[variableName]){
-      this.model[variableName] = undefined;
+    else {
+      if (visibility === undefined){      
+        this.pageVisibilities[variableName] = true;
+      }else{
+        this.pageVisibilities[variableName] = eval(visibility);        
+      }
+      if (!this.pageVisibilities[variableName]){
+        this.model[variableName] = undefined;
+      }
+      return this.pageVisibilities[variableName];    
     }
-    return this.visibilities[variableName];    
   }
   
   checkCompleteness(){

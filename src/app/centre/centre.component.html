@@ -49,7 +49,7 @@
                         <span *ngFor="let centreData of centreDataList">
                             <mat-list-item  *ngIf="filteredRecord(centreData, filterByStatusSelected)">
                                 <a class="list" matLine>
-                                    Validity: from {{ centreData.start }} to {{ centreData.end }} 
+                                    Validity: from {{ centreData.start | date:fullDate }} to {{ centreData.end | date:fullDate  }} 
                                     | Record                             
                                     <span *ngIf="centreData.complete">completed</span>
                                     <span *ngIf="!centreData.complete">not completed</span>

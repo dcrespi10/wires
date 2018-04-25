@@ -11,7 +11,7 @@
                     <mat-card-header>
                         <mat-card-title><h2>{{ n.title }}</h2></mat-card-title>
                         <mat-card-subtitle>
-                            {{ n.date }}
+                            {{ n.date | date:fullDate }}
                         </mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>

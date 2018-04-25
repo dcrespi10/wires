@@ -28,17 +28,23 @@
             </a>
         </li>
         <li>
-            <a [routerLink]="['/admissions', currentUser._id]">
+            <a [routerLink]="['/wires', currentUser._id, 'wires']">
               <i class="pe-7s-id"></i>
-              <p>Admissions list</p>
+              <p>Wires</p>
             </a>
         </li>
         <li>
-            <a [routerLink]="['/disclaimer']">
-              <i class="pe-7s-info"></i>
-              <p>Disclaimer</p>
+            <a [routerLink]="['/openabdomen', currentUser._id, 'openabdomen']">
+              <i class="pe-7s-drop"></i>
+              <p>Open abdomen</p>
             </a>
-        </li>    
+        </li>
+        <li>
+            <a [routerLink]="['/infections', currentUser._id, 'infections']">
+              <i class="pe-7s-pin"></i>
+              <p>IAI</p>
+            </a>
+        </li>           
         <li>
             <a [routerLink]="['/login']">
               <i class="pe-7s-airplay"></i>

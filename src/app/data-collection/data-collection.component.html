@@ -27,6 +27,13 @@
             <mat-card-content>
                 <table>
                     <tr *ngFor="let variable of page.variables" class="variables">
+                        <span *ngIf="variable.type=='randomizer' && visibilityCheck(variable.name, variable.visible)">
+                            <span *ngIf="!model[variable.name]">
+                                Randomization cannot be undone, therefore data will be saved after you randomize.
+                                <button color="warn" mat-raised-button (click)="getRandomBlock(variable.name)">Randomize</button>
+                            </span>
+                            Randomized block: {{ model[variable.name] }}
+                        </span>                        
                         <span *ngIf="variable.type=='label' && visibilityCheck(variable.name, variable.visible)">
                             {{ variable.label }}: {{ formulaValue(variable.name, variable.formula) }}
                         </span>

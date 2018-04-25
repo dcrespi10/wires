@@ -17,6 +17,7 @@ export class AdmissionsComponent implements OnInit {
   admissionList: any=[];
   admissionId: string;
   unsaved: boolean = false;
+  moduleInstance: string;
   filterByStatusOptions = ['All', 'Errors', 'Uncomplete'];
   filterByStatusSelected = 'All';
   filterByText: string;
@@ -36,7 +37,10 @@ export class AdmissionsComponent implements OnInit {
     ngOnInit() {
       this.route.params.subscribe(
         (params : any) => {
+          console.log(params);
            this.id = params["id"]; 
+           console.log(this.id);
+           this.moduleInstance = params["module"]; 
            this.getcrf();
            this.loadAdmissionsList();   
         }
@@ -46,7 +50,9 @@ export class AdmissionsComponent implements OnInit {
     filteredRecord(admission, filterType:string){
       var state:boolean = true;
       var text:boolean = admission.customId.indexOf(this.filterByText) > -1 || this.filterByText == undefined || this.filterByText.length == 0;
-      
+      if (admission.module != this.moduleInstance){
+        return false;
+      }
       if (filterType=="Uncomplete"){
         state = admission.complete != true;
       }
@@ -63,8 +69,10 @@ export class AdmissionsComponent implements OnInit {
       }
       if (this.unsaved == false || letExit){
         this.admissionId = undefined;
+        console.log(this.id);
         this.dataService.getCollection(this.id).subscribe(
           data => {
+            console.log(data);
             this.admissionList = data;
           }, 
           error =>{

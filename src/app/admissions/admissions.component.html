@@ -19,7 +19,7 @@
                             </a>
                         </li>
                         <li *ngIf="!admissionId">
-                            <a (click)="admissionId = 'newid'; model={complete:false, hasErrors:false}" matTooltip="New admission">
+                            <a (click)="admissionId = 'newid'; model={complete:false, hasErrors:false, module:moduleInstance}" matTooltip="New admission">
                                 <i class="pe-7s-plus"></i>                                    
                             </a>                                
                         </li>
@@ -64,6 +64,7 @@
                         </span>
                         <mat-list-item *ngIf="admissionList.length == 0">
                             <a matLine>
+                                {{ admissionList | json }}
                                 No admissions record to show. Add your first admission by clicking the PLUS icon!                            
                             </a>   
                         </mat-list-item>                        
