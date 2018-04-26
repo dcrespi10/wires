@@ -16,6 +16,8 @@ export class CentreComponent implements OnInit {
   centreDataList: any=[];
   centreDataId: string;
   unsaved: boolean = false; 
+  moduleInstance: string;
+  moduleLabels = {"centre": "Centre's data"};
   filterByStatusOptions = ['All', 'Errors', 'Uncomplete'];
   filterByStatusSelected = 'All';
 
@@ -57,7 +59,7 @@ export class CentreComponent implements OnInit {
     }
     if (this.unsaved == false || letExit){
       this.centreDataId = undefined;
-      this.centresDataService.getCollection(this.id).subscribe(
+      this.centresDataService.getCollection(this.id, "centre").subscribe(
         data => {
           this.centreDataList = data;
         }, 

@@ -1,4 +1,4 @@
-<div *ngIf="form">
+<div *ngIf="form" class="data-collection">
     <mat-card class="example-card">
         <mat-card-header>
             <mat-card-title><h2>{{ moduleLabels[model.module] }}: Record status</h2></mat-card-title>
@@ -15,10 +15,10 @@
             </span>
         </mat-card-content>
     </mat-card>
-    <span *ngFor="let page of form.pages">
-        <mat-card class="example-card">
+    <span *ngFor="let page of form.pages ">
+        <mat-card class="example-card" *ngIf="visibilityCheck(page.name, page.visible)">
             <mat-card-header>
-                <mat-card-title><h2>{{ page.label }}</h2></mat-card-title>
+                <mat-card-title><h2>{{ page.label }} - {{ page.order }}</h2></mat-card-title>
                 <mat-card-subtitle>
                     <span *ngIf="uncompletedPages.indexOf(page.page) == -1 ">Section completed</span>
                     <span *ngIf="uncompletedPages.indexOf(page.page) > -1 ">Section NOT completed</span>    
@@ -89,14 +89,14 @@
                             </td>
                         </span>
                         <span *ngIf="variable.type=='single' && visibilityCheck(variable.name, variable.visible)">
-                            <td>{{ variable.label }}</td>
                             <td>
                                 <mat-error *ngIf="variable.mandatory && (!model[variable.name] || model[variable.name] == '')">
                                     <strong>*</strong>
                                 </mat-error>                                
                             </td>
                             <td>
-                                <mat-radio-group class="example-radio-group" [(ngModel)]="model[variable.name]" (ngModelChange)="emitValueChanged()">
+                                <label for="{{variable.name}}">{{variable.label}}</label>
+                                <mat-radio-group [name]="variable.name" class="example-radio-group" [(ngModel)]="model[variable.name]" (ngModelChange)="emitValueChanged()">
                                     <mat-radio-button class="example-radio-button" *ngFor="let v of variable.values"
                                         [name]="variable.name" [value]="v.name" color="warn">
                                         {{ v.label }}

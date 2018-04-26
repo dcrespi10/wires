@@ -19,7 +19,7 @@
                             </a>
                         </li>
                         <li *ngIf="!centreDataId">
-                            <a (click)="centreDataId = 'newid'; model={complete:false, hasErrors:false}" matTooltip="New centre's data">
+                            <a (click)="centreDataId = 'newid'; model={complete:false, hasErrors:false, module:'centre'}" matTooltip="New centre's data">
                                 <i class="pe-7s-plus"></i>                                    
                             </a>                                
                         </li>
