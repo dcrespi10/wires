@@ -3,25 +3,25 @@
         <mat-card-header>
             <mat-card-title><h2>{{ moduleLabels[model.module] }}: Record status</h2></mat-card-title>
             <mat-card-subtitle>
-                <span *ngIf="model.complete">Record has been completed. </span>    
-                <span *ngIf="!model.complete">Record has not been completed. </span>    
+                Record has <span *ngIf="!model.complete">not </span>  been completed.
                 <span *ngIf="model.hasErrors">Record has errors. </span>    
                 <span *ngIf="!model.hasErrors">No errors detected. </span>    
             </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
+            {{ model.uncompletedPages | json }} {{ pageVisibilities | json }}
             <span *ngFor="let error of form.errors">
                 <mat-error *ngIf="errorIsVisible(error.errorId, error.formula)">{{ error.label }}</mat-error>
             </span>
         </mat-card-content>
     </mat-card>
     <span *ngFor="let page of form.pages ">
-        <mat-card class="example-card" *ngIf="visibilityCheck(page.name, page.visible)">
+        <mat-card class="example-card" *ngIf="visibilityCheck(page.page, page.visible, 'page')">
             <mat-card-header>
                 <mat-card-title><h2>{{ page.label }} - {{ page.order }}</h2></mat-card-title>
                 <mat-card-subtitle>
-                    <span *ngIf="uncompletedPages.indexOf(page.page) == -1 ">Section completed</span>
-                    <span *ngIf="uncompletedPages.indexOf(page.page) > -1 ">Section NOT completed</span>    
+                    <span *ngIf="model.uncompletedPages && model.uncompletedPages.indexOf(page.page) == -1 ">Section completed</span>
+                    <span *ngIf="model.uncompletedPages && model.uncompletedPages.indexOf(page.page) > -1 ">Section NOT completed</span>    
                 </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
@@ -40,7 +40,7 @@
                         <span *ngIf="variable.type=='date' && visibilityCheck(variable.name, variable.visible)">
                             <td>
                                 <mat-form-field class="example-full-width">
-                                    <input matInput type="date" placeholder="{{ variable.label }}" (ngModelChange)="emitValueChanged()"
+                                    <input matInput type="date" placeholder="{{ variable.label }}" (ngModelChange)="emitValueChanged(variable.name)"
                                     [(ngModel)]="model[variable.name]">                                    
                                 </mat-form-field>                                
                             </td>
@@ -53,7 +53,8 @@
                         <span *ngIf="variable.type=='string' && visibilityCheck(variable.name, variable.visible)">
                             <td>
                                 <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="{{ variable.label }}" (ngModelChange)="emitValueChanged()" [(ngModel)]="model[variable.name]">
+                                    <input matInput placeholder="{{ variable.label }}"
+                                     [(ngModel)]="model[variable.name]" (change)="emitValueChanged(variable.name)">
                                 </mat-form-field>                                
                             </td>
                             <td>
@@ -65,7 +66,7 @@
                         <span *ngIf="variable.type=='integer' && visibilityCheck(variable.name, variable.visible)">
                             <td>
                                 <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="{{ variable.label }}" (ngModelChange)="emitValueChanged()"
+                                    <input matInput placeholder="{{ variable.label }}" (ngModelChange)="emitValueChanged(variable.name)"
                                     [(ngModel)]="model[variable.name]" type="number" min="0" step="1">
                                 </mat-form-field>
                             </td>                            
@@ -78,7 +79,7 @@
                         <span *ngIf="variable.type=='number' && visibilityCheck(variable.name, variable.visible)">
                             <td>
                                 <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="{{ variable.label }}" (ngModelChange)="emitValueChanged()"
+                                    <input matInput placeholder="{{ variable.label }}" (ngModelChange)="emitValueChanged(variable.name)"
                                     [(ngModel)]="model[variable.name]" type="number" min="0" step="0.01">
                                 </mat-form-field>
                             </td>                            
@@ -96,9 +97,9 @@
                             </td>
                             <td>
                                 <label for="{{variable.name}}">{{variable.label}}</label>
-                                <mat-radio-group [name]="variable.name" class="example-radio-group" [(ngModel)]="model[variable.name]" (ngModelChange)="emitValueChanged()">
+                                <mat-radio-group [name]="variable.name" class="example-radio-group" [(ngModel)]="model[variable.name]" (ngModelChange)="emitValueChanged(variable.name)">
                                     <mat-radio-button class="example-radio-button" *ngFor="let v of variable.values"
-                                        [name]="variable.name" [value]="v.name" color="warn">
+                                        [name]="variable.name" [value]="v.name" color="warn" [matTooltip]="v.definition" [disabled]="v.isCalculated">
                                         {{ v.label }}
                                     </mat-radio-button>                                
                                 </mat-radio-group>
@@ -111,8 +112,9 @@
                                 </mat-error>                                    
                             </td>
                             <td>
-                                <mat-selection-list [(ngModel)]="model[variable.name]" color="warn">
-                                    <mat-list-option [value]="value.name" class="mat-warn" *ngFor="let value of variable.values">
+                                <mat-selection-list [(ngModel)]="model[variable.name]"  (ngModelChange)="emitValueChanged(variable.name)" color="warn" dense>
+                                    <mat-list-option [value]="value.name" class="mat-warn" *ngFor="let value of variable.values"
+                                    [matTooltip]="value.definition">
                                         {{ value.label }}
                                     </mat-list-option>
                                 </mat-selection-list>                                

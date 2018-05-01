@@ -42,9 +42,7 @@ export class AdmissionsComponent implements OnInit {
     ngOnInit() {
       this.route.params.subscribe(
         (params : any) => {
-          console.log(params);
            this.id = params["id"]; 
-           console.log(this.id);
            this.moduleInstance = params["module"]; 
            this.getcrf();
            this.loadAdmissionsList();   
@@ -53,18 +51,24 @@ export class AdmissionsComponent implements OnInit {
     }
 
     filteredRecord(admission, filterType:string){
-      var state:boolean = true;
-      var text:boolean = admission.customId.indexOf(this.filterByText) > -1 || this.filterByText == undefined || this.filterByText.length == 0;
-      if (admission.module != this.moduleInstance){
-        return false;
+      try{
+        var state:boolean = true;
+        var text:boolean = admission.IdentificativeNumber.indexOf(this.filterByText) > -1 || this.filterByText == undefined || this.filterByText.length == 0;
+        if (admission.module != this.moduleInstance){
+          return false;
+        }
+        if (filterType=="Uncomplete"){
+          state = admission.complete != true;
+        }
+        else if (filterType=="Errors"){
+          state = admission.hasErrors;
+        }
+        return state && text;
       }
-      if (filterType=="Uncomplete"){
-        state = admission.complete != true;
+      catch{
+        return true;
       }
-      else if (filterType=="Errors"){
-        state = admission.hasErrors;
-      }
-      return state && text;
+      
     }
 
     loadAdmissionsList(){

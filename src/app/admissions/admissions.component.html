@@ -22,7 +22,7 @@
                             </a>
                         </li>
                         <li *ngIf="!admissionId">
-                            <a (click)="admissionId = 'newid'; model={complete:false, hasErrors:false, module:moduleInstance}" matTooltip="New admission">
+                            <a (click)="admissionId = 'newid'; model={complete:false, hasErrors:false, module:moduleInstance, uncompletedPages:[]}" matTooltip="New admission">
                                 <i class="pe-7s-plus"></i>                                    
                             </a>                                
                         </li>
@@ -55,8 +55,8 @@
                         <span *ngFor="let admission of admissionList">
                             <mat-list-item *ngIf="filteredRecord(admission, filterByStatusSelected)">                             
                                 <a matLine>
-                                    {{ admission.customId }}, age:
-                                    {{ admission.age }} | Record                             
+                                    {{ admission.IdentificativeNumber }}, age:
+                                    {{ admission.Age }} | Record                             
                                     <span *ngIf="admission.complete">completed</span>
                                     <span *ngIf="!admission.complete">not completed</span>
                                     <span *ngIf="admission.hasErrors">with</span>

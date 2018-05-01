@@ -14,7 +14,7 @@ export class DataCollectionComponent implements OnInit {
   @Input() model: any = {};
   @Input() unsavedState: boolean;
   @Output() valueHasChangedEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
-  uncompletedPages:any=[];
+  //uncompletedPages:any=[];
   visibilities={};
   pageVisibilities={};
   errors={};
@@ -26,10 +26,7 @@ export class DataCollectionComponent implements OnInit {
   id:any;
   constructor() {}
 
-  ngOnInit() {
-    //this.checkCompleteness();
-    this.hasErrors();
-  }
+  ngOnInit() {}
 
   getRandomBlock(variableName){
     //randomization service must be called
@@ -49,9 +46,10 @@ export class DataCollectionComponent implements OnInit {
     return errorsFound;
   }
 
-  emitValueChanged(){
+  emitValueChanged(variableName){
     this.unsavedState = true;
     this.valueHasChangedEmitter.emit(true);
+    //this.checkSingleCompleteness(variableName);
     this.checkCompleteness();
     this.hasErrors();
   }
@@ -72,6 +70,8 @@ export class DataCollectionComponent implements OnInit {
       if (!this.visibilities[variableName]){
         this.model[variableName] = undefined;
       }
+      //this.checkSingleCompleteness(variableName);
+      //this.checkCompleteness();
       return this.visibilities[variableName];    
     }
     else {
@@ -80,23 +80,67 @@ export class DataCollectionComponent implements OnInit {
       }else{
         this.pageVisibilities[variableName] = eval(visibility);        
       }
-      if (!this.pageVisibilities[variableName]){
-        this.model[variableName] = undefined;
+      if (this.pageVisibilities[variableName] == false){
+        if (this.model.uncompletedPages && this.model.uncompletedPages.indexOf(variableName) > -1){
+          this.model.uncompletedPages.splice(this.model.uncompletedPages.indexOf(variableName), 1);
+        }        
       }
+      this.checkCompleteness();
+      //should empty variables of the page
       return this.pageVisibilities[variableName];    
     }
   }
   
+
+  variableIsCompleted(variable){
+    var variableCompleted: boolean = false;
+    if (variable.type == 'multi')
+    {
+      if (!this.model[variable.name]){
+        variableCompleted = true;
+      }
+      else if (this.model[variable.name].length == 0){
+        variableCompleted = true;
+      }      
+    }
+    else if (variable.type == 'string' || variable.type == 'number' || variable.type == 'integer')
+    {
+      if (!this.model[variable.name]){
+        variableCompleted = true;
+      }else if ( this.model[variable.name].length == 0){
+        variableCompleted = true;
+      }        
+    }
+    else {
+      variableCompleted = !this.model[variable.name];
+    }
+    return !variableCompleted;
+  }
+
+  checkSingleCompleteness(){}
+  
+
   checkCompleteness(){
     this.model.complete = true;
-    this.uncompletedPages = [];
+    this.model.uncompletedPages = [];
     for (var pindex in this.form.pages){
+      
       var page = this.form.pages[pindex];
+      if (this.pageVisibilities[page.page] != true)
+      {
+        console.log("skipped", page.page, this.pageVisibilities[page.page]);
+        continue;
+      }
       for (var vindex in page.variables){
         var variableName = page.variables[vindex].name;
-        if (!this.model[variableName] && page.variables[vindex].mandatory == true && this.visibilities[variableName]){
-            this.model.complete = false;
-            this.uncompletedPages.push(page.page);            
+        var variableCompleted = this.variableIsCompleted(page.variables[vindex]);
+        if (!variableCompleted && page.variables[vindex].mandatory == true && this.visibilities[variableName]){
+          this.model.complete = false;
+          if (this.model.uncompletedPages.indexOf(page.page) == -1){
+            console.log("page", page.page, 'uncompleted due to', page.variables[vindex].name, this.visibilities[variableName])
+            this.model.uncompletedPages.push(page.page);            
+          }        
+            
         }
       }
     }
@@ -127,7 +171,6 @@ export class DataCollectionComponent implements OnInit {
       this.model[checklistName] = [];
       this.model[checklistName].push(value);
     }
-    console.log(this.model[checklistName]);
-    this.emitValueChanged();
+    this.emitValueChanged(checklistName);
   }
 }
