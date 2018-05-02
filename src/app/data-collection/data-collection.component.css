@@ -13,3 +13,7 @@
     width:400px;
     padding-left: 5px;
 }
+
+.mat-tooltip {
+    white-space: pre-line;
+  }

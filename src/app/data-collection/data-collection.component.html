@@ -38,7 +38,7 @@
                         </span>
                         <span *ngIf="variable.type=='date' && visibilityCheck(variable.name, variable.visible)">
                             <td>
-                                <mat-form-field>
+                                <mat-form-field [matTooltip]="variable.definition">
                                     <input matInput type="date" placeholder="{{ variable.label }}" (ngModelChange)="emitValueChanged(variable.name)"
                                     [(ngModel)]="model[variable.name]">                                    
                                 </mat-form-field>                                
@@ -51,7 +51,7 @@
                         </span>
                         <span *ngIf="variable.type=='string' && visibilityCheck(variable.name, variable.visible)">
                             <td>
-                                <mat-form-field class="be-wide">
+                                <mat-form-field class="be-wide" [matTooltip]="variable.definition">
                                     <input matInput placeholder="{{ variable.label }}"
                                      [(ngModel)]="model[variable.name]" (change)="emitValueChanged(variable.name)">
                                 </mat-form-field>                                
@@ -64,7 +64,7 @@
                         </span>
                         <span *ngIf="variable.type=='integer' && visibilityCheck(variable.name, variable.visible)">
                             <td>
-                                <mat-form-field class="be-wide">
+                                <mat-form-field class="be-wide" [matTooltip]="variable.definition">
                                     <input matInput placeholder="{{ variable.label }}" (ngModelChange)="emitValueChanged(variable.name)"
                                     [(ngModel)]="model[variable.name]" type="number" min="0" step="1">
                                 </mat-form-field>
@@ -77,7 +77,7 @@
                         </span>
                         <span *ngIf="variable.type=='number' && visibilityCheck(variable.name, variable.visible)">
                             <td>
-                                <mat-form-field class="be-wide">
+                                <mat-form-field class="be-wide" [matTooltip]="variable.definition">
                                     <input matInput placeholder="{{ variable.label }}" (ngModelChange)="emitValueChanged(variable.name)"
                                     [(ngModel)]="model[variable.name]" type="number" min="0" step="0.01">
                                 </mat-form-field>
@@ -95,9 +95,9 @@
                                 </mat-error>                                
                             </td>
                             <td>
-                                <label>{{variable.label}}</label>
+                                <label [matTooltip]="variable.definition">{{variable.label}}</label>
                                 <mat-radio-group [name]="variable.name" class="radio-group" [(ngModel)]="model[variable.name]" 
-                                    (ngModelChange)="emitValueChanged(variable.name)">
+                                    (ngModelChange)="emitValueChanged(variable.name)" >
                                     <mat-radio-button  *ngFor="let v of variable.values"
                                         [name]="variable.name" [value]="v.name" color="warn" [matTooltip]="v.definition">
                                         <label style="font-weight:lighter">{{ v.label }}</label>
@@ -112,7 +112,7 @@
                                 </mat-error>                                    
                             </td>
                             <td *ngIf="variable.values && variable.values.length <= 10">
-                                <mat-selection-list [(ngModel)]="model[variable.name]"  (ngModelChange)="emitValueChanged(variable.name)" color="warn" dense>
+                                <mat-selection-list [(ngModel)]="model[variable.name]"  (ngModelChange)="emitValueChanged(variable.name)" color="warn" [matTooltip]="variable.definition">
                                     <mat-list-option [value]="value.name" class="mat-warn" *ngFor="let value of variable.values"
                                     [matTooltip]="value.definition">
                                         {{ value.label }}
@@ -121,7 +121,7 @@
                             </td>
 
                             <td *ngIf="variable.values && variable.values.length > 10">
-                                <mat-form-field class="be-wide">
+                                <mat-form-field class="be-wide" [matTooltip]="variable.definition">
                                     <mat-select multiple placeholder="Select values" [(ngModel)]="model[variable.name]"  (ngModelChange)="emitValueChanged(variable.name)" color="warn">
                                         <mat-option [value]="value.name" class="mat-warn" *ngFor="let value of variable.values"
                                         [matTooltip]="value.definition">
