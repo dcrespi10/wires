@@ -1,4 +1,15 @@
-.data-collection .mat-list-item, mat-radio-button {
-    font-size: 0.8em;
+.mat-radio-button {
+    padding-right: 5px;
+    padding-left: 5px;
+    
+  }
+
+.radio-group{
+    display: inline-flex;
+    flex-direction: column;
 }
 
+.be-wide {
+    width:400px;
+    padding-left: 5px;
+}

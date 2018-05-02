@@ -70,8 +70,6 @@ export class DataCollectionComponent implements OnInit {
       if (!this.visibilities[variableName]){
         this.model[variableName] = undefined;
       }
-      //this.checkSingleCompleteness(variableName);
-      //this.checkCompleteness();
       return this.visibilities[variableName];    
     }
     else {
@@ -86,11 +84,9 @@ export class DataCollectionComponent implements OnInit {
         }        
       }
       this.checkCompleteness();
-      //should empty variables of the page
       return this.pageVisibilities[variableName];    
     }
-  }
-  
+  }  
 
   variableIsCompleted(variable){
     var variableCompleted: boolean = false;
@@ -128,7 +124,6 @@ export class DataCollectionComponent implements OnInit {
       var page = this.form.pages[pindex];
       if (this.pageVisibilities[page.page] != true)
       {
-        console.log("skipped", page.page, this.pageVisibilities[page.page]);
         continue;
       }
       for (var vindex in page.variables){
@@ -137,7 +132,6 @@ export class DataCollectionComponent implements OnInit {
         if (!variableCompleted && page.variables[vindex].mandatory == true && this.visibilities[variableName]){
           this.model.complete = false;
           if (this.model.uncompletedPages.indexOf(page.page) == -1){
-            console.log("page", page.page, 'uncompleted due to', page.variables[vindex].name, this.visibilities[variableName])
             this.model.uncompletedPages.push(page.page);            
           }        
             
