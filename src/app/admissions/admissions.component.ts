@@ -18,7 +18,7 @@ export class AdmissionsComponent implements OnInit {
   admissionId: string;
   unsaved: boolean = false;
   moduleInstance: string;
-  filterByStatusOptions = ['All', 'Errors', 'Uncomplete'];
+  filterByStatusOptions = ['All', 'Errors', 'Uncomplete', 'Deleted'];
   moduleLabels = {
     "wires": "Wires",
     "openabdomen": "Open Abdomen",
@@ -48,27 +48,6 @@ export class AdmissionsComponent implements OnInit {
            this.loadAdmissionsList();   
         }
      );     
-    }
-
-    filteredRecord(admission, filterType:string){
-      try{
-        var state:boolean = true;
-        var text:boolean = admission.IdentificativeNumber.indexOf(this.filterByText) > -1 || this.filterByText == undefined || this.filterByText.length == 0;
-        if (admission.module != this.moduleInstance){
-          return false;
-        }
-        if (filterType=="Uncomplete"){
-          state = admission.complete != true;
-        }
-        else if (filterType=="Errors"){
-          state = admission.hasErrors;
-        }
-        return state && text;
-      }
-      catch{
-        return true;
-      }
-      
     }
 
     loadAdmissionsList(){
@@ -109,6 +88,19 @@ export class AdmissionsComponent implements OnInit {
 
     hasChanges(): boolean{
       return this.unsaved;
+    }
+
+    deleteAdmission(){
+      if (this.model.userid){
+        this.model.deleted = true;
+        this.saveAdmission();
+      }
+      this.loadAdmissionsList();
+    }
+
+    restoreAdmission(){
+      this.model.deleted = false;
+      this.saveAdmission();
     }
 
     saveAdmission(){

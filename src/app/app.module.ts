@@ -20,6 +20,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatInputModule, MatCardModule, MatRadioModule, MatCheckboxModule, 
     MatTooltipModule, MatListModule, MatButtonModule, MatSnackBarModule, MatSelectModule } from '@angular/material/';
 import {ReactiveFormsModule} from '@angular/forms';
+import { AdmissionsFilterPipe } from './admissions-filter.pipe';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import {ReactiveFormsModule} from '@angular/forms';
         AdmissionsComponent,
         CentreComponent,
         SidebarComponent,
-        DataCollectionComponent
+        DataCollectionComponent,
+        AdmissionsFilterPipe
     ],
     providers: [
         AuthGuard,

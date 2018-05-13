@@ -34,7 +34,9 @@
                             Randomized block: {{ model[variable.name] }}
                         </span>                        
                         <span *ngIf="variable.type=='label' && visibilityCheck(variable.name, variable.visible)">
-                            <label>{{ variable.label }}:</label> {{ formulaValue(variable.name, variable.formula) }}
+                            <label [matTooltip]="variable.definition">{{ variable.label }}:</label> 
+                            <span *ngIf="variable.formula">{{ formulaValue(variable.name, variable.formula) }}</span>
+                            <span *ngIf="!variable.formula">{{ model[variable.name]}}</span>
                         </span>
                         <span *ngIf="variable.type=='date' && visibilityCheck(variable.name, variable.visible)">
                             <td>
