@@ -22,7 +22,8 @@ export class AdmissionsComponent implements OnInit {
   moduleLabels = {
     "wires": "Wires",
     "openabdomen": "Open Abdomen",
-    "infections": "IAI"
+    "infections": "IAI",
+    "causticingestiondatabase": "Caustic Ingestion Database"
   }
   filterByStatusSelected = 'All';
   filterByText: string;
@@ -141,7 +142,7 @@ export class AdmissionsComponent implements OnInit {
     }
 
     getcrf() {
-      this.crfService.getCrf("AdmissionsData")
+      this.crfService.getCrf(this.moduleInstance)
           .subscribe(
               data => {
                   this.form = data;

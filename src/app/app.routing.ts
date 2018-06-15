@@ -15,7 +15,8 @@ const appRoutes: Routes = [
     { path: 'centre/:id', component: CentreComponent, canDeactivate:[ConfirmDeactivateCentreGuard] }, 
     { path: 'wires/:id/:module', component: AdmissionsComponent, canDeactivate: [ConfirmDeactivateGuard] }, 
     { path: 'openabdomen/:id/:module', component: AdmissionsComponent, canDeactivate: [ConfirmDeactivateGuard] }, 
-    { path: 'infections/:id/:module', component: AdmissionsComponent, canDeactivate: [ConfirmDeactivateGuard] }, 
+    { path: 'infections/:id/:module', component: AdmissionsComponent, canDeactivate: [ConfirmDeactivateGuard] },
+    { path: 'causticingestiondatabase/:id/:module', component: AdmissionsComponent, canDeactivate: [ConfirmDeactivateGuard] }, 
     { path: 'account/:id', component: AccountComponent }, 
 
     // otherwise redirect to home
