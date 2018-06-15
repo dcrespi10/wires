@@ -58,10 +58,8 @@ export class AdmissionsComponent implements OnInit {
       }
       if (this.unsaved == false || letExit){
         this.admissionId = undefined;
-        console.log(this.id);
         this.dataService.getCollection(this.id, this.moduleInstance).subscribe(
           data => {
-            console.log(data);
             this.admissionList = data;
           }, 
           error =>{

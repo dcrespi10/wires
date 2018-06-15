@@ -113,9 +113,6 @@ export class DataCollectionComponent implements OnInit {
     return !variableCompleted;
   }
 
-  checkSingleCompleteness(){}
-  
-
   checkCompleteness(){
     this.model.complete = true;
     this.model.uncompletedPages = [];
