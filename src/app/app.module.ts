@@ -21,6 +21,8 @@ import { MatInputModule, MatCardModule, MatRadioModule, MatCheckboxModule,
     MatTooltipModule, MatListModule, MatButtonModule, MatSnackBarModule, MatSelectModule } from '@angular/material/';
 import {ReactiveFormsModule} from '@angular/forms';
 import { AdmissionsFilterPipe } from './admissions-filter.pipe';
+import { RecoverComponent } from './recover/recover.component';
+import { RestoreComponent } from './restore/restore.component';
 
 
 @NgModule({
@@ -52,7 +54,9 @@ import { AdmissionsFilterPipe } from './admissions-filter.pipe';
         CentreComponent,
         SidebarComponent,
         DataCollectionComponent,
-        AdmissionsFilterPipe
+        AdmissionsFilterPipe,
+        RecoverComponent,
+        RestoreComponent
     ],
     providers: [
         AuthGuard,

@@ -20,6 +20,14 @@ export class UserService {
         return this.http.post(appConfig.apiUrl + '/users/register', user);
     }
 
+    recoverPassword(email: string){
+        return this.http.post(appConfig.apiUrl + '/users/recover', {address:email});
+    }
+
+    restorePassword(model){
+        return this.http.post(appConfig.apiUrl + '/users/restore', model);
+    }
+
     update(user: User) {
         return this.http.put(appConfig.apiUrl + '/users/' + user._id, user);
     }
