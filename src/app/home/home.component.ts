@@ -25,8 +25,19 @@ export class HomeComponent implements OnInit {
         this.newsService.getCollection(this.currentUser._id, "news")
         .subscribe(
             data => {
-                console.log(data);
+                if (!data){
+                    data = [{ 
+                        "_id" : "1d", 
+                        "title" : "Welcome to the WIRES network!", 
+                        "text" : "This is the WIRES news section. Here you can get any communication from the WIRES team, like news or follow-up to be made. Navigate throught the left side bar. Enjoy!", 
+                        "date" : "2018-04-20", 
+                        "expiryDate" : "2999-12-31", 
+                        "priority" : "low", 
+                        "userid" : "5adb12815444ba207c75932c"
+                    }];
+                }
                 this.news = data;                            
+
             },
             error => {});
     }

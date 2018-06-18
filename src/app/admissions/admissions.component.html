@@ -3,13 +3,17 @@
         <sidebar></sidebar>
         <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
     </div>      
-    <div class="main-panel" *ngIf="form != undefined">
+    <div class="main-panel" *ngIf="!centresDataCompleted">
+        centres data must be completed before you can actually collect admissions data.
+        <a [routerLink]="['/centre', id]">Go to centres data section!</a>
+    </div>
+    <div class="main-panel" *ngIf="form != undefined && centresDataCompleted">
         <div class="navbar navbar-default" id="mobnav">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
                         <li style="padding: 5px 10px 0px 0px;margin: 10px 3px 0px 0px;">                            
-                           {{ moduleLabels[moduleInstance] }} 
+                           {{ moduleLabels[moduleInstance] }}
                         </li>
                         <li *ngIf="admissionId">                            
                             <a class="navbar-brand" matTooltip="Back to admissions list" (click)="loadAdmissionsList()" >

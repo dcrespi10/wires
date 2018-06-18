@@ -15,4 +15,7 @@ export class CrfService {
                 return crf;
             });
     }
+    update(data) {
+        return this.http.post(appConfig.apiUrl + '/crfs/update', data);
+    }    
 }

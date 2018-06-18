@@ -21,7 +21,8 @@ export class DataCollectionComponent implements OnInit {
   moduleLabels = {
     "wires": "Wires",
     "openabdomen": "Open Abdomen",
-    "infections": "IAI"
+    "infections": "IAI",
+    "causticingestiondatabase": "Caustic Ingestion Database"
   };
   id:any;
   constructor() {}

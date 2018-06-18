@@ -19,6 +19,7 @@ export class AdmissionsComponent implements OnInit {
   unsaved: boolean = false;
   moduleInstance: string;
   filterByStatusOptions = ['All', 'Errors', 'Uncomplete', 'Deleted'];
+  centresDataCompleted: boolean = false;
   moduleLabels = {
     "wires": "Wires",
     "openabdomen": "Open Abdomen",
@@ -34,9 +35,10 @@ export class AdmissionsComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private crfService: CrfService,
     private dataService: DataService,
+    private centresDataService: DataService,
     private alertService: AlertService,
     public snackBar: MatSnackBar) { 
-      this.dataService.setCollectionName("admissionsdata");      
+      this.centresDataService.setCollectionName("centresdata");    
     }
 
 
@@ -45,10 +47,28 @@ export class AdmissionsComponent implements OnInit {
         (params : any) => {
            this.id = params["id"]; 
            this.moduleInstance = params["module"]; 
+           //this.update();
+           this.centresDataAreCompleted();
+           this.dataService.setCollectionName("admissionsdata");  
            this.getcrf();
            this.loadAdmissionsList();   
         }
      );     
+    }
+
+    centresDataAreCompleted(){
+      this.centresDataService.getCollection(this.id, "centre").subscribe(
+        data => {
+          for (var index in data){
+            if (data[index].complete == true){
+              this.centresDataCompleted = true;
+              break;
+            }
+          }
+        }, 
+        error =>{
+          console.log("uff");
+        });
     }
 
     loadAdmissionsList(){
@@ -61,6 +81,7 @@ export class AdmissionsComponent implements OnInit {
         this.dataService.getCollection(this.id, this.moduleInstance).subscribe(
           data => {
             this.admissionList = data;
+            console.log(data);
           }, 
           error =>{
             console.log("uff");
@@ -144,11 +165,28 @@ export class AdmissionsComponent implements OnInit {
           .subscribe(
               data => {
                   this.form = data;
+                  console.log(data);
                   //this.setUnCompletedSection();                
               },
               error => {
                   
           });
-    }       
+    }  
+    
+    
+    update(){
+    //FIXME: method should be used only in another place (specifical page to update crf definitions)
+    /*
+    var crfNew = {};  
+    this.crfService.update(crfNew)
+          .subscribe(
+              data => {
+                  
+              },
+              error => {
+                  
+          });
+    */
+    }
 
 }
