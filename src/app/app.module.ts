@@ -23,6 +23,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { AdmissionsFilterPipe } from './admissions-filter.pipe';
 import { RecoverComponent } from './recover/recover.component';
 import { RestoreComponent } from './restore/restore.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { RestoreComponent } from './restore/restore.component';
         DataCollectionComponent,
         AdmissionsFilterPipe,
         RecoverComponent,
-        RestoreComponent
+        RestoreComponent,
+        NavbarComponent
     ],
     providers: [
         AuthGuard,

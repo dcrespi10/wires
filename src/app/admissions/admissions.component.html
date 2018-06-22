@@ -1,51 +1,32 @@
 <div class="wrapper">
-    <div class="sidebar" data-color="red" data-image="">
-        <sidebar></sidebar>
-        <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
-    </div>      
-    <div class="main-panel" *ngIf="!centresDataCompleted">
-        centres data must be completed before you can actually collect admissions data.
-        <a [routerLink]="['/centre', id]">Go to centres data section!</a>
-    </div>
-    <div class="main-panel" *ngIf="form != undefined && centresDataCompleted">
-        <div class="navbar navbar-default" id="mobnav">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-left">
-                        <li style="padding: 5px 10px 0px 0px;margin: 10px 3px 0px 0px;">                            
-                           {{ moduleLabels[moduleInstance] }}
-                        </li>
-                        <li *ngIf="admissionId">                            
-                            <a class="navbar-brand" matTooltip="Back to admissions list" (click)="loadAdmissionsList()" >
-                                <i class="pe-7s-back-2" ></i>                                  
-                            </a>
-                        </li>
-                        <li *ngIf="admissionId">
-                            <a (click)="saveAdmission()" matTooltip="Save">
-                                <i class="pe-7s-diskette"></i>                                
-                            </a>
-                        </li>
-                        <li *ngIf="admissionId && !model.deleted">
-                            <a (click)="deleteAdmission()" matTooltip="Delete admission">
-                                <i class="pe-7s-close-circle"></i>                                
-                            </a>
-                        </li>
-                        <li *ngIf="admissionId && model.deleted">
-                            <a (click)="restoreAdmission()" matTooltip="Restore admission">
-                                <i class="pe-7s-check"></i>                                
-                            </a>
-                        </li>
-                        <li *ngIf="!admissionId">
-                            <a (click)="admissionId = 'newid'; model={IdentificativeNumber:  ('0000000'+(admissionList.length + 1)).slice(-7), complete:false, hasErrors:false, module:moduleInstance, uncompletedPages:[]}" matTooltip="New admission">
+        <div class="sidebar" data-color="red" data-image="">
+            <sidebar></sidebar>
+            <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+        </div>      
+        <div class="main-panel" *ngIf="!centresDataCompleted">
+            centres data must be completed before you can actually collect admissions data.
+            <a [routerLink]="['/centre', id]">Go to centres data section!</a>
+        </div>
+        <div class="main-panel" *ngIf="form != undefined && centresDataCompleted">
+            <div style="background-color:white; border-bottom: 1px solid;">
+                <table style="width: 100%;"  *ngIf="!admissionId">
+                    <tr>
+                        <td>               
+                            {{ moduleLabels[moduleInstance] }}
+                        </td>
+                        <td align="right"> 
+                            <navbar-button *ngIf="isMobile()"></navbar-button>
+                            <!--<input *ngIf="!isMobile()" [(ngModel)]="filterByText" matInput placeholder="Search" style="padding: 10px 5px 0px 0px;margin: 10px 3px 0px 0px;">
+                            -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button mat-button (click)="admissionId = 'newid'; model={IdentificativeNumber:  ('0000000'+(admissionList.length + 1)).slice(-7), complete:false, hasErrors:false, module:moduleInstance, uncompletedPages:[]}" matTooltip="New admission">
                                 <i class="pe-7s-plus"></i>                                    
-                            </a>                                
-                        </li>
-                        <li *ngIf="!admissionId">
-                            <a matTooltip="Export data">
-                                <i class="pe-7s-server"></i>                                    
-                            </a>                                
-                        </li>
-                        <li *ngIf="!admissionId">
+                            </button>                                
+                        </td>
+                        <td>
                             <mat-form-field style="padding: 5px 10px 0px 0px;margin: 10px 3px 0px 0px;">
                                 <mat-select [(value)]="filterByStatusSelected" placeholder="Show">
                                     <mat-option *ngFor="let mode of filterByStatusOptions" [value]="mode">
@@ -53,46 +34,63 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>                           
-                        </li>
-                        <li *ngIf="!admissionId">
-                            <input [(ngModel)]="filterByText" matInput placeholder="Search" style="padding: 10px 5px 0px 0px;margin: 10px 3px 0px 0px;">
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <div class="main-content col-md-12">
-            <span *ngIf="!admissionId">
-                <div style="margin-top:45px;">
-                    <mat-nav-list>
-                        <span *ngFor="let admission of admissionList | admissionsFilter:filterByText:filterByStatusSelected:moduleInstance">
-                            <mat-list-item>                             
-                                <a matLine>
-                                    Identificative Record Number: {{ admission.IdentificativeNumber }}, age:
-                                    {{ admission.Age }} | Record                             
-                                    <span *ngIf="admission.complete">completed</span>
-                                    <span *ngIf="!admission.complete">not completed</span>
-                                    <span *ngIf="admission.hasErrors">with</span>
-                                    <span *ngIf="!admission.hasErrors">without</span> errors                            
-                                </a>
-                                <button mat-button color="warn" (click)="loadAdmission(admission._id)">Open</button>
-                            </mat-list-item>
-                        </span>
-                        <mat-list-item *ngIf="(admissionList | admissionsFilter:filterByText:filterByStatusSelected:moduleInstance) == 0">
-                            <a matLine>
-                                No admissions record to show.
-                            </a>   
-                        </mat-list-item>                        
-                    </mat-nav-list>
-                </div>                    
+                        </td>
+                    </tr>
+                </table>
                 
-            </span>            
-            <span *ngIf="admissionId">
-                <data-collection [(collectionId)]="admissionId" [(userid)]="id" 
-                [(form)]="form" [(model)]="model" (valueHasChangedEmitter)="valueHasChanged($event)"
-                [unsavedState]="unsaved"></data-collection>                                
-            </span>
-        </div>        
+                <span *ngIf="admissionId">                            
+                    <button mat-button matTooltip="Back to admissions list" (click)="loadAdmissionsList()" >
+                        <i class="pe-7s-back-2" ></i>                                  
+                    </button>
+                </span>
+                <span *ngIf="admissionId">
+                    <button mat-button (click)="saveAdmission()" matTooltip="Save">
+                        <i class="pe-7s-diskette"></i>                                
+                    </button>
+                </span>
+                <span *ngIf="admissionId && !model.deleted">
+                    <button mat-button (click)="deleteAdmission()" matTooltip="Delete admission">
+                        <i class="pe-7s-close-circle"></i>                                
+                    </button>
+                </span>
+                <span *ngIf="admissionId && model.deleted">
+                    <button mat-button (click)="restoreAdmission()" matTooltip="Restore admission">
+                        <i class="pe-7s-check"></i>                                
+                    </button>
+                </span>
+            </div>  
+            
+            <div class="main-content col-md-12">
+                <span *ngIf="!admissionId">
+                    <div style="margin-top:5px;">
+                        <mat-nav-list>
+                            <span *ngFor="let admission of admissionList | admissionsFilter:filterByText:filterByStatusSelected:moduleInstance">
+                                <mat-list-item>                             
+                                    <a matLine>
+                                        Identificative Record Number: {{ admission.IdentificativeNumber }}, age:
+                                        {{ admission.Age }} | Record                             
+                                        <span *ngIf="admission.complete">completed</span>
+                                        <span *ngIf="!admission.complete">not completed</span>
+                                        <span *ngIf="admission.hasErrors">with</span>
+                                        <span *ngIf="!admission.hasErrors">without</span> errors                            
+                                    </a>
+                                    <button mat-button color="warn" (click)="loadAdmission(admission._id)">Open</button>
+                                </mat-list-item>
+                            </span>
+                            <mat-list-item *ngIf="(admissionList | admissionsFilter:filterByText:filterByStatusSelected:moduleInstance) == 0">
+                                <a matLine>
+                                    No admissions record to show.
+                                </a>   
+                            </mat-list-item>                        
+                        </mat-nav-list>
+                    </div>                    
+                    
+                </span>            
+                <span *ngIf="admissionId">
+                    <data-collection [(collectionId)]="admissionId" [(userid)]="id" 
+                    [(form)]="form" [(model)]="model" (valueHasChangedEmitter)="valueHasChanged($event)"
+                    [unsavedState]="unsaved"></data-collection>                                
+                </span>
+            </div>        
+        </div>
     </div>
-</div>

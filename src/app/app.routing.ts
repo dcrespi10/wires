@@ -10,7 +10,7 @@ import { AdmissionsComponent } from './admissions/index';
 import { AccountComponent } from './account/index';
 import { AuthGuard, ConfirmDeactivateGuard, ConfirmDeactivateCentreGuard } from './_guards/index';
 
-const appRoutes: Routes = [
+export const appRoutes: Routes = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent }, 

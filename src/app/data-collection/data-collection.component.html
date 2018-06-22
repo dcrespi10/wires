@@ -98,6 +98,7 @@
                             </td>
                             <td>
                                 <label [matTooltip]="variable.definition">{{variable.label}}</label>
+                                <br/>
                                 <mat-radio-group [name]="variable.name" class="radio-group" [(ngModel)]="model[variable.name]" 
                                     (ngModelChange)="emitValueChanged(variable.name)" >
                                     <mat-radio-button  *ngFor="let v of variable.values"
@@ -108,21 +109,21 @@
                             </td>
                         </span>
                         <span *ngIf="variable.type=='multi' && visibilityCheck(variable.name, variable.visible)">
-                            <td><label>{{ variable.label }}</label>                                    
+                            <tr><label>{{ variable.label }}</label>   <br/>                                 
                                 <mat-error *ngIf="variable.mandatory && (!model[variable.name] || model[variable.name] == '')">
                                     <strong>*</strong>
                                 </mat-error>                                    
-                            </td>
-                            <td *ngIf="variable.values && variable.values.length <= 10">
+                            </tr>
+                            <tr *ngIf="variable.values && variable.values.length <= 10">
                                 <mat-selection-list [(ngModel)]="model[variable.name]"  (ngModelChange)="emitValueChanged(variable.name)" color="warn" [matTooltip]="variable.definition">
                                     <mat-list-option [value]="value.name" class="mat-warn" *ngFor="let value of variable.values"
                                     [matTooltip]="value.definition">
-                                        {{ value.label }}
+                                        <label>{{ value.label }}</label>
                                     </mat-list-option>
                                 </mat-selection-list>                                
-                            </td>
+                            </tr>
 
-                            <td *ngIf="variable.values && variable.values.length > 10">
+                            <tr *ngIf="variable.values && variable.values.length > 10">
                                 <mat-form-field class="be-wide" [matTooltip]="variable.definition">
                                     <mat-select multiple placeholder="Select values" [(ngModel)]="model[variable.name]"  (ngModelChange)="emitValueChanged(variable.name)" color="warn">
                                         <mat-option [value]="value.name" class="mat-warn" *ngFor="let value of variable.values"
@@ -131,7 +132,7 @@
                                         </mat-option>
                                     </mat-select >                                
                                 </mat-form-field>
-                            </td> 
+                            </tr> 
                             
                         </span>                    
                         <br/>

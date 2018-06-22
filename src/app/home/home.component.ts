@@ -21,6 +21,17 @@ export class HomeComponent implements OnInit {
         this.getNews();
     }
 
+    isMobile(){
+        var ua = navigator.userAgent;
+        var width = window.screen.width;
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua))
+          return true;
+        if (width < 900)
+          return true;
+        console.log(width);
+        return false;
+      }
+
     getNews(){
         this.newsService.getCollection(this.currentUser._id, "news")
         .subscribe(

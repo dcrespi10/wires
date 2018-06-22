@@ -5,6 +5,16 @@
     </div>
 
     <div class="main-panel">
+        <table style="width: 100%;">
+            <tr>
+                <td>
+                    Home
+                </td>
+                <td align="right">
+                    <navbar-button *ngIf="isMobile()"></navbar-button>
+                </td>
+            </tr>
+        </table>
         <div>
             <span *ngFor="let n of news">
                 <mat-card class="example-card">

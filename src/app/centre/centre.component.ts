@@ -19,6 +19,7 @@ export class CentreComponent implements OnInit {
   moduleInstance: string;
   moduleLabels = {"centre": "Centre's data"};
   filterByStatusOptions = ['All', 'Errors', 'Uncomplete'];
+  
   filterByStatusSelected = 'All';
 
   constructor(
@@ -130,5 +131,15 @@ export class CentreComponent implements OnInit {
                 this.form = data;                            
             },
             error => {});
+  }
+  isMobile(){
+    var ua = navigator.userAgent;
+    var width = window.screen.width;
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua))
+      return true;
+    if (width < 900)
+      return true;
+    console.log(width);
+    return false;
   }
 }

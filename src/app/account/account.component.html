@@ -4,6 +4,16 @@
         <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
     </div>
     <div class="main-panel">
+        <table style="width: 100%;">
+            <tr>
+                <td>
+                    Account
+                </td>
+                <td align="right">
+                    <navbar-button *ngIf="isMobile()"></navbar-button>
+                </td>
+            </tr>
+        </table>
         <div>
             <mat-card class="example-card">
                 <mat-card-header>

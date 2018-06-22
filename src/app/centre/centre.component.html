@@ -4,47 +4,60 @@
         <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
     </div>      
     <div class="main-panel" *ngIf="form != undefined">
-        <div class="navbar navbar-default" id="mobnav">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-left">
-                        <li class="dropdown" *ngIf="centreDataId">                            
-                            <a class="navbar-brand" matTooltip="Back to centre's data list" (click)="loadCentresDataList()" >
-                                <i class="pe-7s-back-2" ></i>                                  
-                            </a>
-                        </li>
-                        <li *ngIf="centreDataId">
-                            <a (click)="save()" matTooltip="Save">
-                                <i class="pe-7s-diskette"></i>                                
-                            </a>
-                        </li>
-                        <li *ngIf="!centreDataId">
-                            <a (click)="centreDataId = 'newid'; model={complete:false, hasErrors:false, module:'centre'}" matTooltip="New centre's data">
-                                <i class="pe-7s-plus"></i>                                    
-                            </a>                                
-                        </li>
-                        <li *ngIf="!centreDataId">
-                            <a matTooltip="Export data">
-                                <i class="pe-7s-server"></i>                                    
-                            </a>                                
-                        </li>
-                        <li *ngIf="!centreDataId">
-                            <mat-form-field style="padding: 5px 10px 0px 0px;margin: 10px 3px 0px 0px;">
-                                <mat-select [(value)]="filterByStatusSelected" placeholder="Show">
-                                    <mat-option *ngFor="let mode of filterByStatusOptions" [value]="mode">
-                                    {{ mode }}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>                           
-                        </li>
-                    </ul>                    
-                </div>
-            </div>
-        </div>
-        
+        <div style="background-color:white; border-bottom: 1px solid;">
+            <table style="width: 100%;"  *ngIf="!centreDataId">
+                <tr>
+                    <td>               
+                        Centre's data
+                    </td>
+                    <td align="right"> 
+                        <navbar-button *ngIf="isMobile()"></navbar-button>
+                        <!--<input *ngIf="!isMobile()" [(ngModel)]="filterByText" matInput placeholder="Search" style="padding: 10px 5px 0px 0px;margin: 10px 3px 0px 0px;">
+                        -->
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button mat-button (click)="centreDataId = 'newid'; model={complete:false, hasErrors:false, module:'centre'}" matTooltip="New centre's data">
+                            <i class="pe-7s-plus"></i>                                    
+                        </button>                                
+                    </td>
+                    <td>
+                        <mat-form-field style="padding: 5px 10px 0px 0px;margin: 10px 3px 0px 0px;">
+                            <mat-select [(value)]="filterByStatusSelected" placeholder="Show">
+                                <mat-option *ngFor="let mode of filterByStatusOptions" [value]="mode">
+                                {{ mode }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>                           
+                    </td>
+                </tr>
+            </table>
+            
+            <span *ngIf="centreDataId">                            
+                <button mat-button matTooltip="Back to admissions list" (click)="loadCentresDataList()" >
+                    <i class="pe-7s-back-2" ></i>                                  
+                </button>
+            </span>
+            <span *ngIf="centreDataId">
+                <button mat-button (click)="saveAdmission()" matTooltip="Save">
+                    <i class="pe-7s-diskette"></i>                                
+                </button>
+            </span>
+            <span *ngIf="centreDataId && !model.deleted">
+                <button mat-button (click)="deleteAdmission()" matTooltip="Delete admission">
+                    <i class="pe-7s-close-circle"></i>                                
+                </button>
+            </span>
+            <span *ngIf="centreDataId && model.deleted">
+                <button mat-button (click)="restoreAdmission()" matTooltip="Restore admission">
+                    <i class="pe-7s-check"></i>                                
+                </button>
+            </span>
+        </div>  
         <div class="main-content col-md-12">
             <span *ngIf="!centreDataId">
-                <div style="margin-top:40px;">
+                <div style="margin-top:5px;">
                     <mat-nav-list>
                         <span *ngFor="let centreData of centreDataList">
                             <mat-list-item  *ngIf="filteredRecord(centreData, filterByStatusSelected)">

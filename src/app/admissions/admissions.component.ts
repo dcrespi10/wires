@@ -173,7 +173,16 @@ export class AdmissionsComponent implements OnInit {
           });
     }  
     
-    
+    isMobile(){
+      var ua = navigator.userAgent;
+      var width = window.screen.width;
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua))
+        return true;
+      if (width < 900)
+        return true;
+      console.log(width);
+      return false;
+    }
     update(){
     //FIXME: method should be used only in another place (specifical page to update crf definitions)
     /*
