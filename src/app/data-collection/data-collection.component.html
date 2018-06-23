@@ -109,10 +109,11 @@
                             </td>
                         </span>
                         <span *ngIf="variable.type=='multi' && visibilityCheck(variable.name, variable.visible)">
-                            <tr><label>{{ variable.label }}</label>   <br/>                                 
+                            <tr>                               
                                 <mat-error *ngIf="variable.mandatory && (!model[variable.name] || model[variable.name] == '')">
                                     <strong>*</strong>
                                 </mat-error>                                    
+                                <label>{{ variable.label }}</label><br/>  
                             </tr>
                             <tr *ngIf="variable.values && variable.values.length <= 10">
                                 <mat-selection-list [(ngModel)]="model[variable.name]"  (ngModelChange)="emitValueChanged(variable.name)" color="warn" [matTooltip]="variable.definition">
@@ -133,7 +134,6 @@
                                     </mat-select >                                
                                 </mat-form-field>
                             </tr> 
-                            
                         </span>                    
                         <br/>
                     </tr>
