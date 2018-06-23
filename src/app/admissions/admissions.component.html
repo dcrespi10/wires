@@ -66,13 +66,20 @@
                         <mat-nav-list>
                             <span *ngFor="let admission of admissionList | admissionsFilter:filterByText:filterByStatusSelected:moduleInstance">
                                 <mat-list-item>                             
-                                    <a matLine>
+                                    <a matLine *ngIf="!isMobile()">
                                         Identificative Record Number: {{ admission.IdentificativeNumber }}, age:
                                         {{ admission.Age }} | Record                             
                                         <span *ngIf="admission.complete">completed</span>
                                         <span *ngIf="!admission.complete">not completed</span>
                                         <span *ngIf="admission.hasErrors">with</span>
                                         <span *ngIf="!admission.hasErrors">without</span> errors                            
+                                    </a>
+                                    <a matLine *ngIf="isMobile()">
+                                        ID: {{ admission.IdentificativeNumber }}, age:
+                                        {{ admission.Age }}                 
+                                        <i class="pe-7s-check" id="okbox" *ngIf="!admission.hasErrors && admission.complete"></i>
+                                        <i class="pe-7s-help1" id="uncompletebox" *ngIf="!admission.hasErrors && !admission.complete"></i>
+                                        <i class="pe-7s-attention" id="wrongbox" *ngIf="admission.hasErrors"></i>
                                     </a>
                                     <button mat-button color="warn" (click)="loadAdmission(admission._id)">Open</button>
                                 </mat-list-item>

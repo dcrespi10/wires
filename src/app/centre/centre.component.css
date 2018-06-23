@@ -9,3 +9,18 @@
 i {
   font-size: 40px;
 }
+
+#okbox {
+  color: green ;
+  font-size:16px;
+}
+
+#uncompletebox {
+  color: orangered ;
+  font-size:16px;
+}
+
+#wrongbox {
+  color: darkred;
+  font-size:16px;
+}

@@ -35,16 +35,16 @@
             </table>
             
             <span *ngIf="centreDataId">                            
-                <button mat-button matTooltip="Back to admissions list" (click)="loadCentresDataList()" >
+                <button mat-button matTooltip="Back to centres data list" (click)="loadCentresDataList()" >
                     <i class="pe-7s-back-2" ></i>                                  
                 </button>
             </span>
             <span *ngIf="centreDataId">
-                <button mat-button (click)="saveAdmission()" matTooltip="Save">
+                <button mat-button (click)="save()" matTooltip="Save">
                     <i class="pe-7s-diskette"></i>                                
                 </button>
             </span>
-            <span *ngIf="centreDataId && !model.deleted">
+            <!--span *ngIf="centreDataId && !model.deleted">
                 <button mat-button (click)="deleteAdmission()" matTooltip="Delete admission">
                     <i class="pe-7s-close-circle"></i>                                
                 </button>
@@ -53,7 +53,7 @@
                 <button mat-button (click)="restoreAdmission()" matTooltip="Restore admission">
                     <i class="pe-7s-check"></i>                                
                 </button>
-            </span>
+            </span-->
         </div>  
         <div class="main-content col-md-12">
             <span *ngIf="!centreDataId">
@@ -61,13 +61,19 @@
                     <mat-nav-list>
                         <span *ngFor="let centreData of centreDataList">
                             <mat-list-item  *ngIf="filteredRecord(centreData, filterByStatusSelected)">
-                                <a class="list" matLine>
+                                <a class="list" matLine *ngIf="!isMobile()">
                                     Validity: from {{ centreData.start | date:fullDate }} to {{ centreData.end | date:fullDate  }} 
                                     | Record                             
                                     <span *ngIf="centreData.complete">completed</span>
                                     <span *ngIf="!centreData.complete">not completed</span>
                                     <span *ngIf="centreData.hasErrors">with</span>
                                     <span *ngIf="!centreData.hasErrors">without</span> errors                            
+                                </a>
+                                <a matLine *ngIf="isMobile()">
+                                    Data from: {{  centreData.start | date:fullDate }}  
+                                    <i class="pe-7s-check" id="okbox" *ngIf="!centreData.hasErrors && centreData.complete"></i>
+                                    <i class="pe-7s-help1" id="uncompletebox" *ngIf="!centreData.hasErrors && !centreData.complete"></i>
+                                    <i class="pe-7s-attention" id="wrongbox" *ngIf="centreData.hasErrors"></i>
                                 </a>
                                 <button mat-button color="warn" (click)="loadCentreData(centreData._id)">Open</button>
                             </mat-list-item>
